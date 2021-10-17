@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>宝塔 ip多端口建站</title>
-    <url>/others/0/</url>
+    <url>/others/518805b9/</url>
     <content><![CDATA[<h2 id="先假设一个域名"><a href="#先假设一个域名" class="headerlink" title="先假设一个域名"></a>先假设一个域名</h2><p>比如：<a href="http://www.test.com/">www.test.com</a></p>
 <p>点击添加站点，先添加这个假设的站点</p>
 <p><img src="../../images/%E5%AE%9D%E5%A1%94ip%E5%A4%9A%E7%AB%AF%E5%8F%A3%E5%BB%BA%E7%AB%99/2020519-20210115173454780-874155424.png" alt="img"></p>
@@ -160,7 +160,7 @@
   </entry>
   <entry>
     <title>PHP 删除文件最后一行</title>
-    <url>/php/0/</url>
+    <url>/php/9f33eb43/</url>
     <content><![CDATA[<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$a</span> = file(‘文件名’);</span><br><span class="line">file_put_contents(‘文件名’, join(<span class="string">&#x27;&#x27;</span>, array_slice(<span class="variable">$a</span>, <span class="number">0</span>, -<span class="number">1</span>)));</span><br></pre></td></tr></table></figure>
 
 ]]></content>
@@ -170,7 +170,7 @@
   </entry>
   <entry>
     <title>PHP 使用memcache/memcached实现session共享</title>
-    <url>/memcached/0/</url>
+    <url>/memcached/5cacee34/</url>
     <content><![CDATA[<p>参考自：</p>
 <p><a href="https://blog.csdn.net/jiandanokok/article/details/102768573?ivk_sa=1024320u">【Memcached】使用Memcache实现共享Session【原创】_一直加班的程序猿-CSDN博客_memcached做session共享</a></p>
 <p><a href="https://blog.csdn.net/yanlintao1/article/details/38593117">将session的值存储到memcached中去，配置以及方法和注意事项_yanlintao1的专栏-CSDN博客</a></p>
@@ -226,7 +226,7 @@
   </entry>
   <entry>
     <title>PHP 将session写入到memcached</title>
-    <url>/memcached/0/</url>
+    <url>/memcached/1b6ff6a7/</url>
     <content><![CDATA[<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MemcacheSession</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// memcache对象</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="variable">$handler</span> = <span class="literal">null</span>;</span><br><span class="line">    <span class="comment">// 过期时间 秒</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="variable">$lifetime</span> = <span class="literal">null</span>;</span><br><span class="line">    <span class="comment">// 当前时间</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="variable">$time</span> = <span class="literal">null</span>;</span><br><span class="line">    <span class="comment">// session名前缀</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> NS = <span class="string">&#x27;session_&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"><span class="variable">$handler</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">self</span>::<span class="variable">$handler</span> = <span class="variable">$handler</span>;</span><br><span class="line">        <span class="built_in">self</span>::<span class="variable">$lifetime</span> = <span class="number">1440</span>;</span><br><span class="line">        <span class="built_in">self</span>::<span class="variable">$time</span> = time();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 外部调用初始化</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">start</span>(<span class="params">Memcached <span class="variable">$memcached</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">self</span>::init(<span class="variable">$memcached</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 自定义session存储介质</span></span><br><span class="line">        session_set_save_handler(</span><br><span class="line">            <span class="keyword">array</span>(<span class="keyword">__CLASS__</span>, <span class="string">&#x27;open&#x27;</span>),</span><br><span class="line">            <span class="keyword">array</span>(<span class="keyword">__CLASS__</span>, <span class="string">&#x27;close&#x27;</span>),</span><br><span class="line">            <span class="keyword">array</span>(<span class="keyword">__CLASS__</span>, <span class="string">&#x27;read&#x27;</span>),</span><br><span class="line">            <span class="keyword">array</span>(<span class="keyword">__CLASS__</span>, <span class="string">&#x27;write&#x27;</span>),</span><br><span class="line">            <span class="keyword">array</span>(<span class="keyword">__CLASS__</span>, <span class="string">&#x27;destroy&#x27;</span>),</span><br><span class="line">            <span class="keyword">array</span>(<span class="keyword">__CLASS__</span>, <span class="string">&#x27;gc&#x27;</span>)</span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">if</span> (!headers_sent() &amp;&amp; session_id() == <span class="string">&#x27;&#x27;</span>) session_start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">open</span>(<span class="params"><span class="variable">$path</span>, <span class="variable">$name</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">close</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">read</span>(<span class="params"><span class="variable">$PHPSESSID</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$out</span> = <span class="built_in">self</span>::<span class="variable">$handler</span>-&gt;get(<span class="built_in">self</span>::session_key(<span class="variable">$PHPSESSID</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$out</span> === <span class="literal">false</span> || <span class="variable">$out</span> == <span class="literal">null</span>) <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$out</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">write</span>(<span class="params"><span class="variable">$PHPSESSID</span>, <span class="variable">$data</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">self</span>::<span class="variable">$handler</span>-&gt;set(<span class="built_in">self</span>::session_key(<span class="variable">$PHPSESSID</span>), <span class="variable">$data</span>, <span class="built_in">self</span>::<span class="variable">$lifetime</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">destroy</span>(<span class="params"><span class="variable">$PHPSESSID</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">self</span>::<span class="variable">$handler</span>-&gt;delete(<span class="built_in">self</span>::session_key(<span class="variable">$PHPSESSID</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">gc</span>(<span class="params"><span class="variable">$lifetime</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">session_key</span>(<span class="params"><span class="variable">$PHPSESSID</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$session_key</span> = <span class="built_in">self</span>::NS . <span class="variable">$PHPSESSID</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$session_key</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$memcached</span> = <span class="keyword">new</span> Memcached();</span><br><span class="line"><span class="variable">$memcached</span>-&gt;addServer(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">11211</span>);</span><br><span class="line">MemcacheSession::start(<span class="variable">$memcached</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写</span></span><br><span class="line"><span class="variable">$_SESSION</span>[<span class="string">&#x27;aaa&#x27;</span>] = <span class="string">&#x27;你好世界&#x27;</span>;</span><br><span class="line"><span class="comment">// 读</span></span><br><span class="line">var_dump(<span class="variable">$_SESSION</span>);</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
@@ -235,7 +235,7 @@
   </entry>
   <entry>
     <title>PHP 封装Memcached类</title>
-    <url>/memcached/0/</url>
+    <url>/memcached/1ddd81de/</url>
     <content><![CDATA[<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用php提供检查扩展是否存在的函数来进行判断，调用对应的扩展来使用api</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mem</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$handle</span> = <span class="literal">null</span>; <span class="comment">// 连接实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$so</span> = <span class="literal">true</span>; <span class="comment">// 检查扩展是否存在</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 初始化链接</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> array $hosts 链接配置</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string $preFix 前缀</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="keyword">array</span> <span class="variable">$hosts</span>, <span class="keyword">string</span> <span class="variable">$preFix</span> = <span class="string">&#x27;&#x27;</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 检查给定的类是否存在</span></span><br><span class="line">        <span class="keyword">$this</span>-&gt;so = extension_loaded(<span class="string">&#x27;Memcached&#x27;</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;so) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;handle = <span class="keyword">new</span> Memcached();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;handle = <span class="keyword">new</span> Memcache();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//配置</span></span><br><span class="line">        <span class="variable">$c</span> = <span class="keyword">$this</span>-&gt;so ? <span class="string">&#x27;\\Memcached&#x27;</span> : <span class="string">&#x27;\\Memcache&#x27;</span>;</span><br><span class="line">        <span class="comment">// 1. 一致性hash算法</span></span><br><span class="line">        <span class="variable">$params</span> = [</span><br><span class="line">            <span class="variable">$c</span>::OPT_DISTRIBUTION =&gt; <span class="variable">$c</span>::DISTRIBUTION_CONSISTENT,</span><br><span class="line">            <span class="variable">$c</span>::OPT_LIBKETAMA_COMPATIBLE =&gt; <span class="literal">true</span>,</span><br><span class="line">            <span class="variable">$c</span>::OPT_REMOVE_FAILED_SERVERS =&gt; <span class="literal">true</span></span><br><span class="line">        ];</span><br><span class="line">        <span class="comment">// 2. 前缀</span></span><br><span class="line">        <span class="variable">$preFix</span> &amp;&amp; <span class="variable">$params</span>[<span class="variable">$c</span>::OPT_PREFIX_KEY] = <span class="variable">$preFix</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;handle-&gt;setOptions(<span class="variable">$params</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 连接memcached服务</span></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable">$hosts</span> <span class="keyword">as</span> <span class="variable">$item</span>) &#123;</span><br><span class="line">            [<span class="variable">$host</span>, <span class="variable">$port</span>] = <span class="variable">$item</span>;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;handle-&gt;addServer(<span class="variable">$host</span>, <span class="variable">$port</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params"><span class="keyword">string</span> <span class="variable">$key</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;handle-&gt;get(<span class="variable">$key</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加与设置</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">set</span>(<span class="params"><span class="keyword">string</span> <span class="variable">$key</span>, <span class="variable">$value</span>, <span class="keyword">int</span> <span class="variable">$expire</span> = <span class="number">3600</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;so) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;handle-&gt;set(<span class="variable">$key</span>, <span class="variable">$value</span>, <span class="variable">$expire</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;handle-&gt;set(<span class="variable">$key</span>, <span class="variable">$value</span>, MEMCACHE_COMPRESSED, <span class="variable">$expire</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删除</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">del</span>(<span class="params"><span class="keyword">string</span> <span class="variable">$key</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;handle-&gt;delete(<span class="variable">$key</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 自增操作</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $key</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $value</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> mixed</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">incr</span>(<span class="params"><span class="variable">$key</span>, <span class="variable">$value</span> = <span class="number">1</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable">$key</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;handle-&gt;increment(<span class="variable">$key</span>, <span class="variable">$value</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 自减操作</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $key</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $value</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> mixed</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">decr</span>(<span class="params"><span class="variable">$key</span>, <span class="variable">$value</span> = <span class="number">1</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable">$key</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;handle-&gt;decrement(<span class="variable">$key</span>, <span class="variable">$value</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 全部删除</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">flush</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;handle-&gt;flush();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 单个/集群设置</span></span><br><span class="line"><span class="variable">$hosts</span> = [</span><br><span class="line">    [<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">11211</span>],</span><br><span class="line">    [<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">11212</span>],</span><br><span class="line">    [<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">11213</span>],</span><br><span class="line">    [<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">11214</span>]</span><br><span class="line">];</span><br><span class="line"><span class="variable">$mem</span> = <span class="keyword">new</span> Mem(<span class="variable">$hosts</span>);</span><br><span class="line"><span class="comment">// 操作</span></span><br><span class="line"><span class="keyword">for</span> (<span class="variable">$i</span> = <span class="number">1</span>; <span class="variable">$i</span> &lt;= <span class="number">12</span>; <span class="variable">$i</span>++) &#123;</span><br><span class="line">    <span class="variable">$mem</span>-&gt;set(<span class="string">&#x27;key_&#x27;</span> . <span class="variable">$i</span>, <span class="string">&#x27;value_&#x27;</span> . <span class="variable">$i</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// $mem-&gt;flush();</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
@@ -245,7 +245,7 @@
   </entry>
   <entry>
     <title>PHP 抖音小程序二维码生成</title>
-    <url>/php/0/</url>
+    <url>/php/fa2f9fa8/</url>
     <content><![CDATA[<p>使用的是tp框架</p>
 <p>转自 <a href="https://blog.csdn.net/qq_34050360/article/details/106722409">ThinkPHP5生成抖音小程序带参数二维码_菜鸟何时能翻身-CSDN博客_抖音小程序二维码生成</a></p>
 <h2 id="获取accesstoken"><a href="#获取accesstoken" class="headerlink" title="获取accesstoken"></a>获取accesstoken</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 public function get_access_token()</span><br><span class="line">2 &#123;</span><br><span class="line">3     $appid = &#x27;tt301******3a416&#x27;; //配置appid</span><br><span class="line">4     $secret = &#x27;0421128******65529&#x27;; //配置secret</span><br><span class="line">5     $url = &quot;https://developer.toutiao.com/api/apps/token?grant_type=client_credential&amp;appid=&quot; . $appid . &quot;&amp;secret=&quot; . $secret;</span><br><span class="line">6     $result = https_request($url);</span><br><span class="line">7     $Result = json_decode($result, true);</span><br><span class="line">8     return $Result[&#x27;access_token&#x27;];</span><br><span class="line">9 &#125;</span><br></pre></td></tr></table></figure>
@@ -270,7 +270,7 @@
   </entry>
   <entry>
     <title>js ajax提交表单内容(和图片文件)</title>
-    <url>/javascript/0/</url>
+    <url>/javascript/84c09c95/</url>
     <content><![CDATA[<p>使用ajax直接提交表单的数据，在后台会无法获取，因为ajax无法上传文件，需要按下面代码这样写</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="keyword">var</span> formData = <span class="keyword">new</span> FormData($(<span class="string">&quot;#myform&quot;</span>)[<span class="number">0</span>]); <span class="comment">// &quot;#myform&quot; form标签的id值</span></span><br><span class="line"> <span class="number">2</span> </span><br><span class="line"> <span class="number">3</span> $.ajax(&#123;</span><br><span class="line"> <span class="number">4</span>     url: <span class="string">&quot;&#123;:U(GROUP_NAME.&#x27;/Wallet/chongzhi&#x27;)&#125;&quot;</span>, <span class="comment">// 请求地址</span></span><br><span class="line"> <span class="number">5</span>     type: <span class="string">&#x27;POST&#x27;</span>, <span class="comment">// 请求方式</span></span><br><span class="line"> <span class="number">6</span>     data: formData, <span class="comment">// 数据</span></span><br><span class="line"> <span class="number">7</span>     dataType: <span class="string">&#x27;json&#x27;</span>, <span class="comment">// 预期的服务器返回的数据类型</span></span><br><span class="line"> <span class="number">8</span>     contentType: <span class="literal">false</span>, <span class="comment">// 必需，否则报错，告诉jQuery不要去设置Content-Type请求头</span></span><br><span class="line"> <span class="number">9</span>     processData: <span class="literal">false</span>, <span class="comment">// 必需，否则报错，告诉jQuery不要去处理发送的数据</span></span><br><span class="line"><span class="number">10</span>     success: <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line"><span class="number">11</span>         <span class="keyword">if</span> (res.status == <span class="number">1</span>) &#123;</span><br><span class="line"><span class="number">12</span>             <span class="built_in">console</span>.log(res.info)</span><br><span class="line"><span class="number">13</span>         &#125;</span><br><span class="line"><span class="number">14</span>         $(<span class="string">&quot;.btn&quot;</span>).attr(<span class="string">&#x27;disabled&#x27;</span>, <span class="literal">false</span>);</span><br><span class="line"><span class="number">15</span>     &#125;,</span><br><span class="line"><span class="number">16</span>     error: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="number">17</span>         alert(<span class="string">&quot;请求失败&quot;</span>);</span><br><span class="line"><span class="number">18</span>         $(<span class="string">&quot;.btn&quot;</span>).attr(<span class="string">&#x27;disabled&#x27;</span>, <span class="literal">false</span>);</span><br><span class="line"><span class="number">19</span>     &#125;</span><br><span class="line"><span class="number">20</span> &#125;)</span><br></pre></td></tr></table></figure>
 
@@ -286,7 +286,7 @@
   </entry>
   <entry>
     <title>js input type=file按钮修改样式及选择图片后预览_点击图标上传文件</title>
-    <url>/javascript/0/</url>
+    <url>/javascript/7f71159/</url>
     <content><![CDATA[<p>修改<input type='file'>，并通过<label>标签来实现</p>
 <p>将<input type='file'>隐藏掉，然后修改<label>标签中的内容及样式</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"> 1 <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&#x27;multipart/form-data&#x27;</span>&gt;</span></span><br><span class="line"> 2     <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wx_box&quot;</span>&gt;</span></span><br><span class="line"> 3         <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&#x27;my_file&#x27;</span> <span class="attr">class</span>=<span class="string">&#x27;inputlabelBox&#x27;</span>&gt;</span></span><br><span class="line"> 4             <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;img&quot;</span> <span class="attr">src</span>=<span class="string">&#x27;/Public/img/upload.png&#x27;</span> <span class="attr">width</span>=<span class="string">&quot;80%&quot;</span>&gt;</span></span><br><span class="line"> 5         <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"> 6         <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myfile&quot;</span> <span class="attr">id</span>=<span class="string">&#x27;my_file&#x27;</span> <span class="attr">style</span>=<span class="string">&quot;display:none;&quot;</span> <span class="attr">accept</span>=<span class="string">&quot;image/*&quot;</span>/&gt;</span></span><br><span class="line"> 7     <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> 8 <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"> 9 </span><br><span class="line">10 <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="number">11</span>     $(<span class="string">&quot;#my_file&quot;</span>).change(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript"><span class="number">12</span>         $(<span class="string">&quot;.img&quot;</span>).attr(<span class="string">&quot;src&quot;</span>, URL.createObjectURL($(<span class="built_in">this</span>)[<span class="number">0</span>].files[<span class="number">0</span>]));</span></span><br><span class="line"><span class="javascript"><span class="number">13</span>     &#125;);</span></span><br><span class="line"><span class="javascript"><span class="number">14</span> </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -301,7 +301,7 @@
   </entry>
   <entry>
     <title>bootstrapTable 复选框选多页勾选</title>
-    <url>/javascript/0/</url>
+    <url>/javascript/a2804fc5/</url>
     <content><![CDATA[<blockquote>
 <p>问题</p>
 </blockquote>
@@ -322,7 +322,7 @@
   </entry>
   <entry>
     <title>json数据中 双引号变为&amp;quot;</title>
-    <url>/javascript/0/</url>
+    <url>/javascript/ebad6dc4/</url>
     <content><![CDATA[<p>JS</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">var yc = ycList.replace(/&amp;quot;/g,&#x27;&quot;&#x27;);</span><br></pre></td></tr></table></figure>
 
@@ -339,7 +339,7 @@
   </entry>
   <entry>
     <title>PHP session_start() Cannot start session when headers already sent in</title>
-    <url>/php/0/</url>
+    <url>/php/e97971d0/</url>
     <content><![CDATA[<blockquote>
 <p>方法一</p>
 </blockquote>
@@ -361,7 +361,7 @@
   </entry>
   <entry>
     <title>GitHub访问不了的解决方案</title>
-    <url>/others/0/</url>
+    <url>/others/dcb107c3/</url>
     <content><![CDATA[<p>转自 <a href="https://blog.csdn.net/qq_29621089/article/details/115453593">https://blog.csdn.net/qq_29621089/article/details/115453593</a></p>
 <h2 id="确定ip"><a href="#确定ip" class="headerlink" title="确定ip"></a>确定ip</h2><p>进入网址<a href="https://github.com.ipaddress.com/">https://github.com.ipaddress.com</a></p>
 <p>查看GitHub的ip地址。</p>
@@ -403,7 +403,7 @@
   </entry>
   <entry>
     <title>mysql 事务的实现原理</title>
-    <url>/mysql/0/</url>
+    <url>/mysql/ef4ef4/</url>
     <content><![CDATA[<h2 id="事务的特点"><a href="#事务的特点" class="headerlink" title="事务的特点"></a>事务的特点</h2><ul>
 <li>原子性：事务中的所有操作作为一个整体像原子一样不可分割，要么全部成功，要么全部失败。</li>
 <li>一致性：事务的执行结果必须使数据库从一个一致性状态到另一个一致性状态。一致性状态是指：</li>
@@ -656,7 +656,7 @@
   </entry>
   <entry>
     <title>mysql 锁机制</title>
-    <url>/mysql/0/</url>
+    <url>/mysql/4bf344cf/</url>
     <content><![CDATA[<p>感谢，转自 <a href="https://blog.csdn.net/user2025/article/details/115394211">https://blog.csdn.net/user2025/article/details/115394211</a></p>
 <p><a href="https://www.cnblogs.com/crazylqy/p/7821481.html">https://www.cnblogs.com/crazylqy/p/7821481.html</a></p>
 <h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p>锁是计算机协调多个线程访问同一共享资源的机制，主要用于解决多线程访问同一共享资源的并发安全问题</p>
@@ -777,7 +777,7 @@
   </entry>
   <entry>
     <title>mysql 查询缓存</title>
-    <url>/mysql/0/</url>
+    <url>/mysql/9170ec61/</url>
     <content><![CDATA[<p>转自　<a href="https://www.jianshu.com/p/5c3ddf9a454c">https://www.jianshu.com/p/5c3ddf9a454c</a></p>
 <p>开启查询缓存后，查询语句的解析过程：</p>
 <p>在解析一个查询语句之前，如果查询缓存是打开的，那么MySQL会优先检查这个查询是否命中查询缓存中的数据。如果当前的查询恰好命中了查询缓存，那么在返回查询结果之前MySQL会检查一次用户权限。若权限没有问题，MySQL会跳过所有其他阶段（解析、优化、执行等），直接从缓存中拿到结果并返回给客户端。这种情况下，查询不会被解析，不用生成执行计划，不会被执行。</p>
@@ -843,7 +843,7 @@
   </entry>
   <entry>
     <title>PHP 大转盘抽奖思路_按权重抽奖</title>
-    <url>/php/0/</url>
+    <url>/php/5981c86d/</url>
     <content><![CDATA[<p>应该不难理解，比如概率数组[‘50’,’100’,’300’]</p>
 <p>他们一共是 ‘450’ 份，’50’ 在它们当中占’50’份</p>
 <p>将这个数组循环，抽取一个 1-450 的随机数，如果在 50的范围内，那么就选中了50</p>
@@ -857,7 +857,7 @@
   </entry>
   <entry>
     <title>PHP 导出数据到EXCEL 单元格内换行</title>
-    <url>/php/0/</url>
+    <url>/php/7590ea24/</url>
     <content><![CDATA[<p>1、单元格内的字符串，换行用 “\r\n”，单引号我没试，用双引号吧</p>
 <p>2、还有一个条件就是 </p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$objPHPExcel</span>-&gt;getActiveSheet()-&gt;getStyle(<span class="string">&#x27;A4&#x27;</span>)-&gt;getAlignment()-&gt;setWrapText(<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
@@ -872,7 +872,7 @@
   </entry>
   <entry>
     <title>PHP 导出数据到EXCEL时数字自动变为科学计数法的最简单解决方法</title>
-    <url>/php/0/</url>
+    <url>/php/b7833455/</url>
     <content><![CDATA[<p>转自：<a href="https://blog.csdn.net/weixin_43674113/article/details/103601398">https://blog.csdn.net/weixin_43674113/article/details/103601398</a></p>
 <p>用程序导出的csv文件，当字段中有比较长的数字字段存在时，在用excel软件查看csv文件时就会变成科学技术法的表现形式。<br>其实这个问题跟用什么语言导出csv文件没有关系。Excel显示数字时，如果数字大于12位，它会自动转化为科学计数法；如果数字大于15位，它不仅用于科学技术法表示，还会只保留高15位，其他位都变0。<br>解决方式：（只要把数字字段后面加上显示上看不见的字符即可，字符串结尾加上制表符”\t”）<br>注意一定是”\t”，不是’\t’.</p>
 ]]></content>
@@ -884,44 +884,8 @@
       </tags>
   </entry>
   <entry>
-    <title>PHP call_user_func() 和 call_user_func_array()</title>
-    <url>/php/0/</url>
-    <content><![CDATA[<p>一、 call_user_func</p>
-<p>作用</p>
-<p>把第一个参数作为回调函数调用</p>
-<p>说明</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">call_user_func ( <span class="keyword">callable</span> <span class="variable">$callback</span> [, <span class="keyword">mixed</span> <span class="variable">$parameter</span> [, <span class="keyword">mixed</span> $... ]] ) : <span class="keyword">mixed</span></span><br></pre></td></tr></table></figure>
-
-<p>第一个参数 callback 是被调用的回调函数，其余参数是回调函数的参数</p>
-<p>用法</p>
-<p>1.基本用法</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 1.基本用法</span></span><br><span class="line"><span class="number">2</span> <span class="function"><span class="keyword">function</span> <span class="title">barber</span>(<span class="params"><span class="variable">$type</span></span>)</span></span><br><span class="line"><span class="function">3 </span>&#123;</span><br><span class="line"><span class="number">4</span>     <span class="keyword">echo</span> <span class="string">&quot;<span class="subst">&#123;$type&#125;</span>&lt;br/&gt;&quot;</span>;</span><br><span class="line"><span class="number">5</span> &#125;</span><br><span class="line"><span class="number">6</span> call_user_func(<span class="string">&#x27;barber&#x27;</span>, <span class="string">&quot;mushroom&quot;</span>);</span><br><span class="line"><span class="number">7</span> call_user_func(<span class="string">&#x27;barber&#x27;</span>, <span class="string">&quot;shave&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>2.使用命名空间</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="meta">&lt;?php</span></span><br><span class="line"> <span class="number">2</span> </span><br><span class="line"> <span class="number">3</span> <span class="keyword">namespace</span> <span class="title">Foobar</span>;</span><br><span class="line"> <span class="number">4</span> </span><br><span class="line"> <span class="number">5</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span></span></span><br><span class="line"><span class="class"> 6 </span>&#123;</span><br><span class="line"> <span class="number">7</span>     <span class="built_in">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"><span class="variable">$name</span></span>)</span></span><br><span class="line"><span class="function"> 8     </span>&#123;</span><br><span class="line"> <span class="number">9</span>         <span class="keyword">print</span> <span class="string">&quot;I&#x27;m <span class="subst">&#123;$name&#125;</span>.&lt;br/&gt;&quot;</span>;</span><br><span class="line"><span class="number">10</span>     &#125;</span><br><span class="line"><span class="number">11</span> &#125;</span><br><span class="line"><span class="number">12</span> </span><br><span class="line"><span class="number">13</span> call_user_func(<span class="keyword">__NAMESPACE__</span> . <span class="string">&#x27;\Foo::test&#x27;</span>, <span class="string">&#x27;Sim&#x27;</span>); <span class="comment">// 第一种</span></span><br><span class="line"><span class="number">14</span> call_user_func(<span class="keyword">array</span>(<span class="keyword">__NAMESPACE__</span> . <span class="string">&#x27;\Foo&#x27;</span>, <span class="string">&#x27;test&#x27;</span>), <span class="string">&#x27;Tony&#x27;</span>); <span class="comment">// 第二种</span></span><br></pre></td></tr></table></figure>
-
-<p>3.调用类中方法</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="comment">// 3.调用类中方法</span></span><br><span class="line"> <span class="number">2</span> <span class="class"><span class="keyword">class</span> <span class="title">myclass</span></span></span><br><span class="line"><span class="class"> 3 </span>&#123;</span><br><span class="line"> <span class="number">4</span>     <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">say_hello</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"> 5     </span>&#123;</span><br><span class="line"> <span class="number">6</span>         <span class="keyword">echo</span> <span class="string">&quot;Hello!\n&quot;</span>;</span><br><span class="line"> <span class="number">7</span>     &#125;</span><br><span class="line"> <span class="number">8</span>     <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">say_bye</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"> 9     </span>&#123;</span><br><span class="line"><span class="number">10</span>         <span class="keyword">echo</span> <span class="string">&quot;Bye!\n&quot;</span>;</span><br><span class="line"><span class="number">11</span>     &#125;</span><br><span class="line"><span class="number">12</span> &#125;</span><br><span class="line"><span class="number">13</span> </span><br><span class="line"><span class="number">14</span> <span class="comment">// 3.1静态方法的调用方式</span></span><br><span class="line"><span class="number">15</span> <span class="variable">$classname</span> = <span class="string">&quot;myclass&quot;</span>;</span><br><span class="line"><span class="number">16</span> </span><br><span class="line"><span class="number">17</span> call_user_func(<span class="keyword">array</span>(<span class="variable">$classname</span>, <span class="string">&#x27;say_hello&#x27;</span>));</span><br><span class="line"><span class="number">18</span> call_user_func(<span class="variable">$classname</span> . <span class="string">&#x27;::say_hello&#x27;</span>); <span class="comment">// As of 5.2.3</span></span><br><span class="line"><span class="number">19</span> </span><br><span class="line"><span class="number">20</span> <span class="variable">$myobject</span> = <span class="keyword">new</span> myclass();</span><br><span class="line"><span class="number">21</span> </span><br><span class="line"><span class="number">22</span> call_user_func(<span class="keyword">array</span>(<span class="variable">$myobject</span>, <span class="string">&#x27;say_hello&#x27;</span>));</span><br><span class="line"><span class="number">23</span> </span><br><span class="line"><span class="number">24</span> <span class="comment">// 3.2非静态方法的调用方式</span></span><br><span class="line"><span class="number">25</span> <span class="comment">//当php &lt;5.3时，可以如下使用，此时会把 b()方法当作是a的一个静态方式。</span></span><br><span class="line"><span class="number">26</span> call_user_func(<span class="keyword">array</span>(<span class="string">&quot;myclass&quot;</span>, <span class="string">&quot;say_bye&quot;</span>));</span><br><span class="line"><span class="number">27</span>  </span><br><span class="line"><span class="number">28</span> <span class="comment">//当php &gt;=5.3时，类的公开的非静态的方法必须在类实例化后方可被调用，否则会提示Strict性错误（为了兼容先前及以后的版本，还是用对象方法传入）。</span></span><br><span class="line"><span class="number">29</span> <span class="variable">$obj</span> = <span class="keyword">new</span> myclass;</span><br><span class="line"><span class="number">30</span> call_user_func(<span class="keyword">array</span>(<span class="variable">$obj</span>, <span class="string">&quot;say_bye&quot;</span>)); <span class="comment">// bye</span></span><br></pre></td></tr></table></figure>
-
-<p>二、call_user_func_array</p>
-<p>和call_user_func很相似，不同点是把一个数组参数作为回调函数的参数</p>
-<p>使用</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="comment">// 1.使用</span></span><br><span class="line"> <span class="number">2</span> <span class="function"><span class="keyword">function</span> <span class="title">foobar</span>(<span class="params"><span class="variable">$arg</span>, <span class="variable">$arg2</span></span>)</span></span><br><span class="line"><span class="function"> 3 </span>&#123;</span><br><span class="line"> <span class="number">4</span>     <span class="keyword">echo</span> <span class="keyword">__FUNCTION__</span>, <span class="string">&quot; got <span class="subst">$arg</span> and <span class="subst">$arg2</span>&lt;br/&gt;&quot;</span>;</span><br><span class="line"> <span class="number">5</span> &#125;</span><br><span class="line"> <span class="number">6</span> <span class="class"><span class="keyword">class</span> <span class="title">foo</span></span></span><br><span class="line"><span class="class"> 7 </span>&#123;</span><br><span class="line"> <span class="number">8</span>     <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"><span class="variable">$arg</span>, <span class="variable">$arg2</span></span>)</span></span><br><span class="line"><span class="function"> 9     </span>&#123;</span><br><span class="line"><span class="number">10</span>         <span class="keyword">echo</span> <span class="keyword">__METHOD__</span>, <span class="string">&quot; got <span class="subst">$arg</span> and <span class="subst">$arg2</span>&lt;br/&gt;&quot;</span>;</span><br><span class="line"><span class="number">11</span>     &#125;</span><br><span class="line"><span class="number">12</span>     <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">bar2</span>(<span class="params"><span class="variable">$arg</span>, <span class="variable">$arg2</span></span>)</span></span><br><span class="line"><span class="function">13     </span>&#123;</span><br><span class="line"><span class="number">14</span>         <span class="keyword">echo</span> <span class="variable">$arg</span> . <span class="string">&#x27; &#x27;</span> . <span class="variable">$arg2</span> . <span class="string">&#x27;&lt;br/&gt;&#x27;</span>;</span><br><span class="line"><span class="number">15</span>     &#125;</span><br><span class="line"><span class="number">16</span> &#125;</span><br><span class="line"><span class="number">17</span> </span><br><span class="line"><span class="number">18</span> <span class="comment">// 1.1 调用函数</span></span><br><span class="line"><span class="number">19</span> call_user_func_array(<span class="string">&quot;foobar&quot;</span>, <span class="keyword">array</span>(<span class="string">&quot;one&quot;</span>, <span class="string">&quot;two&quot;</span>));</span><br><span class="line"><span class="number">20</span> </span><br><span class="line"><span class="number">21</span> <span class="comment">// 1.2 调用类中方法</span></span><br><span class="line"><span class="number">22</span> <span class="comment">// 1.2.1 调用非静态方法</span></span><br><span class="line"><span class="number">23</span> <span class="comment">// php&lt;5.3时，非静态的方法可直接传入类名</span></span><br><span class="line"><span class="number">24</span> call_user_func_array(<span class="keyword">array</span>(<span class="string">&#x27;foo&#x27;</span>, <span class="string">&#x27;bar&#x27;</span>), <span class="keyword">array</span>(<span class="string">&quot;three&quot;</span>, <span class="string">&quot;four&quot;</span>));</span><br><span class="line"><span class="number">25</span> </span><br><span class="line"><span class="number">26</span> <span class="comment">//php&gt;=5.3时，非静态的方法 只有在类被实例化后方可调用，否则会提示Strict性错误</span></span><br><span class="line"><span class="number">27</span> <span class="variable">$foo</span> = <span class="keyword">new</span> foo;</span><br><span class="line"><span class="number">28</span> call_user_func_array(<span class="keyword">array</span>(<span class="variable">$foo</span>, <span class="string">&quot;bar&quot;</span>), <span class="keyword">array</span>(<span class="string">&quot;three&quot;</span>, <span class="string">&quot;four&quot;</span>));</span><br><span class="line"><span class="number">29</span> </span><br><span class="line"><span class="number">30</span> <span class="comment">// 1.2.2 调用静态方法</span></span><br><span class="line"><span class="number">31</span> call_user_func_array(<span class="keyword">array</span>(<span class="string">&#x27;foo&#x27;</span>,<span class="string">&#x27;bar2&#x27;</span>), <span class="keyword">array</span>(<span class="string">&quot;five&quot;</span>, <span class="string">&quot;six&quot;</span>));</span><br><span class="line"><span class="number">32</span> <span class="comment">//或</span></span><br><span class="line"><span class="number">33</span> call_user_func_array(<span class="string">&#x27;foo::bar2&#x27;</span>, <span class="keyword">array</span>(<span class="string">&quot;five&quot;</span>, <span class="string">&quot;six&quot;</span>));</span><br></pre></td></tr></table></figure>
-
-<p>三、使用引用</p>
-<p>传入call_user_func()的参数不能为引用传递</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 使用引用</span></span><br><span class="line"><span class="number">2</span> <span class="function"><span class="keyword">function</span> <span class="title">incr</span>(<span class="params">&amp;<span class="variable">$b</span></span>) </span>&#123;</span><br><span class="line"><span class="number">3</span>     <span class="variable">$b</span>++;</span><br><span class="line"><span class="number">4</span> &#125;</span><br><span class="line"><span class="number">5</span>  </span><br><span class="line"><span class="number">6</span> <span class="variable">$c</span> = <span class="number">0</span>;</span><br><span class="line"><span class="number">7</span> call_user_func_array(<span class="string">&#x27;incr&#x27;</span>, <span class="keyword">array</span>(&amp;<span class="variable">$c</span>));</span><br><span class="line"><span class="number">8</span> <span class="keyword">echo</span> <span class="variable">$c</span>; <span class="comment">//显示 1</span></span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.php.net/manual/zh/function.call-user-func.php">https://www.php.net/manual/zh/function.call-user-func.php</a></p>
-<p>call_user_func ( <a href="https://www.php.net/manual/zh/language.types.callable.php">callable</a> <code>$callback</code> [, <a href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed">mixed</a> <code>$parameter</code> [, <a href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed">mixed</a> <code>$...</code> ]] ) : <a href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed">mixed</a></p>
-]]></content>
-      <categories>
-        <category>php</category>
-      </categories>
-  </entry>
-  <entry>
     <title>PHP CURL的用法及上传图片</title>
-    <url>/php/0/</url>
+    <url>/php/d5c2c145/</url>
     <content><![CDATA[<p>简介</p>
 <p>curl是一个非常强大的开源库，可以使用URL的语法模拟浏览器来传输数据，支持多种协议，FTP, FTPS, HTTP, HTTPS, GOPHER, TELNET, DICT, FILE 以及 LDAP等协议都可以很好的支持，包括一些：HTTPS认证，HTTP POST方法，HTTP PUT方法，FTP上传，keyberos认证，HTTP上传，代理服务器，cookies，用户名/密码认证，下载文件断点续传，上传文件断点续传，http代理服务器管道，甚至它还支持IPv6，scoket5代理服务器，通过http代理服务器上传文件到FTP服务器等等，还可以抓取网页</p>
 <p>您需要在php.ini中开启curl扩展才可以使用它</p>
@@ -961,8 +925,44 @@
       </categories>
   </entry>
   <entry>
+    <title>PHP call_user_func() 和 call_user_func_array()</title>
+    <url>/php/6cbf48b/</url>
+    <content><![CDATA[<p>一、 call_user_func</p>
+<p>作用</p>
+<p>把第一个参数作为回调函数调用</p>
+<p>说明</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">call_user_func ( <span class="keyword">callable</span> <span class="variable">$callback</span> [, <span class="keyword">mixed</span> <span class="variable">$parameter</span> [, <span class="keyword">mixed</span> $... ]] ) : <span class="keyword">mixed</span></span><br></pre></td></tr></table></figure>
+
+<p>第一个参数 callback 是被调用的回调函数，其余参数是回调函数的参数</p>
+<p>用法</p>
+<p>1.基本用法</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 1.基本用法</span></span><br><span class="line"><span class="number">2</span> <span class="function"><span class="keyword">function</span> <span class="title">barber</span>(<span class="params"><span class="variable">$type</span></span>)</span></span><br><span class="line"><span class="function">3 </span>&#123;</span><br><span class="line"><span class="number">4</span>     <span class="keyword">echo</span> <span class="string">&quot;<span class="subst">&#123;$type&#125;</span>&lt;br/&gt;&quot;</span>;</span><br><span class="line"><span class="number">5</span> &#125;</span><br><span class="line"><span class="number">6</span> call_user_func(<span class="string">&#x27;barber&#x27;</span>, <span class="string">&quot;mushroom&quot;</span>);</span><br><span class="line"><span class="number">7</span> call_user_func(<span class="string">&#x27;barber&#x27;</span>, <span class="string">&quot;shave&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>2.使用命名空间</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="meta">&lt;?php</span></span><br><span class="line"> <span class="number">2</span> </span><br><span class="line"> <span class="number">3</span> <span class="keyword">namespace</span> <span class="title">Foobar</span>;</span><br><span class="line"> <span class="number">4</span> </span><br><span class="line"> <span class="number">5</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span></span></span><br><span class="line"><span class="class"> 6 </span>&#123;</span><br><span class="line"> <span class="number">7</span>     <span class="built_in">static</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"><span class="variable">$name</span></span>)</span></span><br><span class="line"><span class="function"> 8     </span>&#123;</span><br><span class="line"> <span class="number">9</span>         <span class="keyword">print</span> <span class="string">&quot;I&#x27;m <span class="subst">&#123;$name&#125;</span>.&lt;br/&gt;&quot;</span>;</span><br><span class="line"><span class="number">10</span>     &#125;</span><br><span class="line"><span class="number">11</span> &#125;</span><br><span class="line"><span class="number">12</span> </span><br><span class="line"><span class="number">13</span> call_user_func(<span class="keyword">__NAMESPACE__</span> . <span class="string">&#x27;\Foo::test&#x27;</span>, <span class="string">&#x27;Sim&#x27;</span>); <span class="comment">// 第一种</span></span><br><span class="line"><span class="number">14</span> call_user_func(<span class="keyword">array</span>(<span class="keyword">__NAMESPACE__</span> . <span class="string">&#x27;\Foo&#x27;</span>, <span class="string">&#x27;test&#x27;</span>), <span class="string">&#x27;Tony&#x27;</span>); <span class="comment">// 第二种</span></span><br></pre></td></tr></table></figure>
+
+<p>3.调用类中方法</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="comment">// 3.调用类中方法</span></span><br><span class="line"> <span class="number">2</span> <span class="class"><span class="keyword">class</span> <span class="title">myclass</span></span></span><br><span class="line"><span class="class"> 3 </span>&#123;</span><br><span class="line"> <span class="number">4</span>     <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">say_hello</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"> 5     </span>&#123;</span><br><span class="line"> <span class="number">6</span>         <span class="keyword">echo</span> <span class="string">&quot;Hello!\n&quot;</span>;</span><br><span class="line"> <span class="number">7</span>     &#125;</span><br><span class="line"> <span class="number">8</span>     <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">say_bye</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"> 9     </span>&#123;</span><br><span class="line"><span class="number">10</span>         <span class="keyword">echo</span> <span class="string">&quot;Bye!\n&quot;</span>;</span><br><span class="line"><span class="number">11</span>     &#125;</span><br><span class="line"><span class="number">12</span> &#125;</span><br><span class="line"><span class="number">13</span> </span><br><span class="line"><span class="number">14</span> <span class="comment">// 3.1静态方法的调用方式</span></span><br><span class="line"><span class="number">15</span> <span class="variable">$classname</span> = <span class="string">&quot;myclass&quot;</span>;</span><br><span class="line"><span class="number">16</span> </span><br><span class="line"><span class="number">17</span> call_user_func(<span class="keyword">array</span>(<span class="variable">$classname</span>, <span class="string">&#x27;say_hello&#x27;</span>));</span><br><span class="line"><span class="number">18</span> call_user_func(<span class="variable">$classname</span> . <span class="string">&#x27;::say_hello&#x27;</span>); <span class="comment">// As of 5.2.3</span></span><br><span class="line"><span class="number">19</span> </span><br><span class="line"><span class="number">20</span> <span class="variable">$myobject</span> = <span class="keyword">new</span> myclass();</span><br><span class="line"><span class="number">21</span> </span><br><span class="line"><span class="number">22</span> call_user_func(<span class="keyword">array</span>(<span class="variable">$myobject</span>, <span class="string">&#x27;say_hello&#x27;</span>));</span><br><span class="line"><span class="number">23</span> </span><br><span class="line"><span class="number">24</span> <span class="comment">// 3.2非静态方法的调用方式</span></span><br><span class="line"><span class="number">25</span> <span class="comment">//当php &lt;5.3时，可以如下使用，此时会把 b()方法当作是a的一个静态方式。</span></span><br><span class="line"><span class="number">26</span> call_user_func(<span class="keyword">array</span>(<span class="string">&quot;myclass&quot;</span>, <span class="string">&quot;say_bye&quot;</span>));</span><br><span class="line"><span class="number">27</span>  </span><br><span class="line"><span class="number">28</span> <span class="comment">//当php &gt;=5.3时，类的公开的非静态的方法必须在类实例化后方可被调用，否则会提示Strict性错误（为了兼容先前及以后的版本，还是用对象方法传入）。</span></span><br><span class="line"><span class="number">29</span> <span class="variable">$obj</span> = <span class="keyword">new</span> myclass;</span><br><span class="line"><span class="number">30</span> call_user_func(<span class="keyword">array</span>(<span class="variable">$obj</span>, <span class="string">&quot;say_bye&quot;</span>)); <span class="comment">// bye</span></span><br></pre></td></tr></table></figure>
+
+<p>二、call_user_func_array</p>
+<p>和call_user_func很相似，不同点是把一个数组参数作为回调函数的参数</p>
+<p>使用</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="comment">// 1.使用</span></span><br><span class="line"> <span class="number">2</span> <span class="function"><span class="keyword">function</span> <span class="title">foobar</span>(<span class="params"><span class="variable">$arg</span>, <span class="variable">$arg2</span></span>)</span></span><br><span class="line"><span class="function"> 3 </span>&#123;</span><br><span class="line"> <span class="number">4</span>     <span class="keyword">echo</span> <span class="keyword">__FUNCTION__</span>, <span class="string">&quot; got <span class="subst">$arg</span> and <span class="subst">$arg2</span>&lt;br/&gt;&quot;</span>;</span><br><span class="line"> <span class="number">5</span> &#125;</span><br><span class="line"> <span class="number">6</span> <span class="class"><span class="keyword">class</span> <span class="title">foo</span></span></span><br><span class="line"><span class="class"> 7 </span>&#123;</span><br><span class="line"> <span class="number">8</span>     <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"><span class="variable">$arg</span>, <span class="variable">$arg2</span></span>)</span></span><br><span class="line"><span class="function"> 9     </span>&#123;</span><br><span class="line"><span class="number">10</span>         <span class="keyword">echo</span> <span class="keyword">__METHOD__</span>, <span class="string">&quot; got <span class="subst">$arg</span> and <span class="subst">$arg2</span>&lt;br/&gt;&quot;</span>;</span><br><span class="line"><span class="number">11</span>     &#125;</span><br><span class="line"><span class="number">12</span>     <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">bar2</span>(<span class="params"><span class="variable">$arg</span>, <span class="variable">$arg2</span></span>)</span></span><br><span class="line"><span class="function">13     </span>&#123;</span><br><span class="line"><span class="number">14</span>         <span class="keyword">echo</span> <span class="variable">$arg</span> . <span class="string">&#x27; &#x27;</span> . <span class="variable">$arg2</span> . <span class="string">&#x27;&lt;br/&gt;&#x27;</span>;</span><br><span class="line"><span class="number">15</span>     &#125;</span><br><span class="line"><span class="number">16</span> &#125;</span><br><span class="line"><span class="number">17</span> </span><br><span class="line"><span class="number">18</span> <span class="comment">// 1.1 调用函数</span></span><br><span class="line"><span class="number">19</span> call_user_func_array(<span class="string">&quot;foobar&quot;</span>, <span class="keyword">array</span>(<span class="string">&quot;one&quot;</span>, <span class="string">&quot;two&quot;</span>));</span><br><span class="line"><span class="number">20</span> </span><br><span class="line"><span class="number">21</span> <span class="comment">// 1.2 调用类中方法</span></span><br><span class="line"><span class="number">22</span> <span class="comment">// 1.2.1 调用非静态方法</span></span><br><span class="line"><span class="number">23</span> <span class="comment">// php&lt;5.3时，非静态的方法可直接传入类名</span></span><br><span class="line"><span class="number">24</span> call_user_func_array(<span class="keyword">array</span>(<span class="string">&#x27;foo&#x27;</span>, <span class="string">&#x27;bar&#x27;</span>), <span class="keyword">array</span>(<span class="string">&quot;three&quot;</span>, <span class="string">&quot;four&quot;</span>));</span><br><span class="line"><span class="number">25</span> </span><br><span class="line"><span class="number">26</span> <span class="comment">//php&gt;=5.3时，非静态的方法 只有在类被实例化后方可调用，否则会提示Strict性错误</span></span><br><span class="line"><span class="number">27</span> <span class="variable">$foo</span> = <span class="keyword">new</span> foo;</span><br><span class="line"><span class="number">28</span> call_user_func_array(<span class="keyword">array</span>(<span class="variable">$foo</span>, <span class="string">&quot;bar&quot;</span>), <span class="keyword">array</span>(<span class="string">&quot;three&quot;</span>, <span class="string">&quot;four&quot;</span>));</span><br><span class="line"><span class="number">29</span> </span><br><span class="line"><span class="number">30</span> <span class="comment">// 1.2.2 调用静态方法</span></span><br><span class="line"><span class="number">31</span> call_user_func_array(<span class="keyword">array</span>(<span class="string">&#x27;foo&#x27;</span>,<span class="string">&#x27;bar2&#x27;</span>), <span class="keyword">array</span>(<span class="string">&quot;five&quot;</span>, <span class="string">&quot;six&quot;</span>));</span><br><span class="line"><span class="number">32</span> <span class="comment">//或</span></span><br><span class="line"><span class="number">33</span> call_user_func_array(<span class="string">&#x27;foo::bar2&#x27;</span>, <span class="keyword">array</span>(<span class="string">&quot;five&quot;</span>, <span class="string">&quot;six&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>三、使用引用</p>
+<p>传入call_user_func()的参数不能为引用传递</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 使用引用</span></span><br><span class="line"><span class="number">2</span> <span class="function"><span class="keyword">function</span> <span class="title">incr</span>(<span class="params">&amp;<span class="variable">$b</span></span>) </span>&#123;</span><br><span class="line"><span class="number">3</span>     <span class="variable">$b</span>++;</span><br><span class="line"><span class="number">4</span> &#125;</span><br><span class="line"><span class="number">5</span>  </span><br><span class="line"><span class="number">6</span> <span class="variable">$c</span> = <span class="number">0</span>;</span><br><span class="line"><span class="number">7</span> call_user_func_array(<span class="string">&#x27;incr&#x27;</span>, <span class="keyword">array</span>(&amp;<span class="variable">$c</span>));</span><br><span class="line"><span class="number">8</span> <span class="keyword">echo</span> <span class="variable">$c</span>; <span class="comment">//显示 1</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.php.net/manual/zh/function.call-user-func.php">https://www.php.net/manual/zh/function.call-user-func.php</a></p>
+<p>call_user_func ( <a href="https://www.php.net/manual/zh/language.types.callable.php">callable</a> <code>$callback</code> [, <a href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed">mixed</a> <code>$parameter</code> [, <a href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed">mixed</a> <code>$...</code> ]] ) : <a href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed">mixed</a></p>
+]]></content>
+      <categories>
+        <category>php</category>
+      </categories>
+  </entry>
+  <entry>
     <title>微信JS-SDK wx.chooseImage选择并预览图片，并上传到自己服务器</title>
-    <url>/javascript/0/</url>
+    <url>/javascript/774c2087/</url>
     <content><![CDATA[<p>转自：<a href="https://zhuanlan.zhihu.com/p/342672565">https://zhuanlan.zhihu.com/p/342672565</a></p>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>我想要达成一个选择完图片就可以直接预览的效果，文档中也写明了localId可以作为img的src属性显示图片，</p>
 <p>我的操作是，选择完图片之后，直接将 localId 赋给 img的src属性，但是结果不显示</p>
@@ -1001,7 +1001,7 @@
   </entry>
   <entry>
     <title>MySQL 利用mysqlbinlog二进制文件还原指定数据库</title>
-    <url>/mysql/0/</url>
+    <url>/mysql/ad16af82/</url>
     <content><![CDATA[<p>推荐这篇 mysqlbinlog详解 - <a href="https://www.cnblogs.com/Presley-lpc/p/9619571.html">https://www.cnblogs.com/Presley-lpc/p/9619571.html</a></p>
 <h3 id="我的初始环境"><a href="#我的初始环境" class="headerlink" title="我的初始环境"></a>我的初始环境</h3><p>系统：CentOS 7.6.1810(Py3.7.8)</p>
 <p>MySQL：5.7.31</p>
@@ -1068,7 +1068,7 @@
   </entry>
   <entry>
     <title>PHP static 延迟静态绑定</title>
-    <url>/php/0/</url>
+    <url>/php/d7fe6b68/</url>
     <content><![CDATA[<p>首先看这种写法</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 1 &lt;?php</span><br><span class="line"> 2 abstract class A</span><br><span class="line"> 3 &#123;</span><br><span class="line"> 4     public static function create(): A</span><br><span class="line"> 5     &#123;</span><br><span class="line"> 6         return new self();</span><br><span class="line"> 7     &#125;</span><br><span class="line"> 8 &#125;</span><br><span class="line"> 9 class B extends A</span><br><span class="line">10 &#123;</span><br><span class="line">11 &#125;</span><br><span class="line">12 B::create();</span><br></pre></td></tr></table></figure>
 
@@ -1125,7 +1125,7 @@
   </entry>
   <entry>
     <title>ElementUI el-select下拉选择框默认显示</title>
-    <url>/javascript/0/</url>
+    <url>/javascript/8f45c573/</url>
     <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 &lt;el-select v-model=&quot;goodsDetail.gift_coupons&quot; placeholder=&quot;无&quot; style=&quot;width:300px&quot;&gt;</span><br><span class="line">2     &lt;el-option :label=&quot;item.name&quot; :value=&quot;item.id&quot; v-for=&quot;(item,id) in couponsList&quot; :key=&quot;item.id&quot;&gt;</span><br><span class="line">3     &lt;/el-option&gt;</span><br><span class="line">4 &lt;/el-select&gt;</span><br></pre></td></tr></table></figure>
 
 <p><strong>方法：</strong></p>
@@ -1141,7 +1141,7 @@
   </entry>
   <entry>
     <title>tp5一对多，a表hasmany b表，b表hasmany c表</title>
-    <url>/php/0/</url>
+    <url>/php/39f83996/</url>
     <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 1 // 在a model定义b model关联</span><br><span class="line"> 2 public function hasManyB()</span><br><span class="line"> 3 &#123;</span><br><span class="line"> 4     return $this-&gt;hasMany(&#x27;关联模型b的模型名&#x27;);</span><br><span class="line"> 5 &#125;</span><br><span class="line"> 6 // 在b model定义c model关联</span><br><span class="line"> 7 public function hasManyC()</span><br><span class="line"> 8 &#123;</span><br><span class="line"> 9 return $this-&gt;hasMany(&#x27;关联模型c的模型名&#x27;);</span><br><span class="line">10 &#125;</span><br><span class="line">11 // 在a model中执行查询</span><br><span class="line">12 $result = $this-&gt;with([&#x27;hasManyB&#x27; =&gt; [&#x27;hasManyC&#x27;]])-&gt;where($where)-&gt;order($order)-&gt;select();</span><br></pre></td></tr></table></figure>
 
 ]]></content>
@@ -1154,7 +1154,7 @@
   </entry>
   <entry>
     <title>vue/uni-app 父组件异步获取动态数据传递给子组件 获取不到值</title>
-    <url>/javascript/0/</url>
+    <url>/javascript/142b5746/</url>
     <content><![CDATA[<p><strong>问题：</strong></p>
 <p>vue 父组件异步请求获取数据，在请求数据没有返回数据时，子组件就已经加载了，并且它绑定的值也是空的</p>
 <p><strong>解决方法（两种）：</strong></p>
@@ -1187,7 +1187,7 @@
   </entry>
   <entry>
     <title>ES6 将数组第一项移到最后一项</title>
-    <url>/javascript/0/</url>
+    <url>/javascript/5221cec5/</url>
     <content><![CDATA[<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// es6语法，将数组第一项移到最后一项</span></span><br><span class="line"><span class="keyword">const</span> [first, ...rest] = <span class="built_in">this</span>.linshi;</span><br><span class="line"><span class="built_in">this</span>.linshi = [...rest, first];</span><br></pre></td></tr></table></figure>
 
 ]]></content>
@@ -1197,7 +1197,7 @@
   </entry>
   <entry>
     <title>PHP 类型声明和强类型声明</title>
-    <url>/php/0/</url>
+    <url>/php/e8cc6196/</url>
     <content><![CDATA[<h4 id="一、类型声明-及-返回值类型声明"><a href="#一、类型声明-及-返回值类型声明" class="headerlink" title="一、类型声明 及 返回值类型声明"></a>一、类型声明 及 返回值类型声明</h4><table>
 <thead>
 <tr>
@@ -1290,7 +1290,7 @@
   </entry>
   <entry>
     <title>FastAdmin 后台将插件配置添加到菜单中</title>
-    <url>/php/0/</url>
+    <url>/php/6e1f7f3f/</url>
     <content><![CDATA[<p>权限管理 - 菜单规则，新增，规则填写 addon/config/name/cms，cms为插件标识</p>
 <p><a href="https://ask.fastadmin.net/question/16185.html">https://ask.fastadmin.net/question/16185.html</a></p>
 ]]></content>
@@ -1300,7 +1300,7 @@
   </entry>
   <entry>
     <title>内聚类型 与 耦合类型（举例说明）</title>
-    <url>/php/0/</url>
+    <url>/php/2b2b8195/</url>
     <content><![CDATA[<h4 id="理解内聚与耦合"><a href="#理解内聚与耦合" class="headerlink" title="理解内聚与耦合"></a>理解内聚与耦合</h4><p><a href="https://www.cnblogs.com/jiuhefree/articles/13725621.html">https://www.cnblogs.com/jiuhefree/articles/13725621.html</a></p>
 <h4 id="内聚类型：（低-–-gt-高）"><a href="#内聚类型：（低-–-gt-高）" class="headerlink" title="内聚类型：（低 –&gt; 高）"></a>内聚类型：（低 –&gt; 高）</h4><p>1、偶然内聚</p>
 <p>  模块的各成分之间没有关联，只是把分散的功能合并在一起。</p>
@@ -1348,7 +1348,7 @@
   </entry>
   <entry>
     <title>理解内聚与耦合</title>
-    <url>/php/0/</url>
+    <url>/php/e6a67bb/</url>
     <content><![CDATA[<h4 id="先了解一下什么是模块？"><a href="#先了解一下什么是模块？" class="headerlink" title="先了解一下什么是模块？"></a>先了解一下什么是模块？</h4><p>模块就是从逻辑上将系统分解为更细微的部分，分而治之。</p>
 <p>复杂问题因为复杂性的问题，比较难解决，但是可以将复杂问题拆解为若干简单问题，逐个击破地解决这些简单问题，最后实现解决复杂问题的效果。</p>
 <p>模块的粒度划分可大可小，可以是函数，类或功能块等等。</p>
@@ -1370,7 +1370,7 @@
   </entry>
   <entry>
     <title>PHP MySQL 存储层级结构的两种方式 邻接表和MPTT</title>
-    <url>/php/0/</url>
+    <url>/php/9f25a75e/</url>
     <content><![CDATA[<p>层级结构，也叫树形结构。在关系型数据库中保存树状结构数据，常用的方法有两种：</p>
 <ul>
 <li>邻接表（Adjacency List）</li>
@@ -1425,7 +1425,7 @@
   </entry>
   <entry>
     <title>PHP $a &amp;&amp; $b = $c 和 $a || $b = $c语法</title>
-    <url>/php/0/</url>
+    <url>/php/5e609c3c/</url>
     <content><![CDATA[<p>一、</p>
 <p>$a &amp;&amp; $b = $c</p>
 <p>解析： 如果 $a 为真, 就执行 $b = $c; 反之不执行</p>
@@ -1444,17 +1444,8 @@
       </categories>
   </entry>
   <entry>
-    <title>JS 一图解决所有 宽高与位置 的获取</title>
-    <url>/javascript/0/</url>
-    <content><![CDATA[<p><img src="../../images/%E6%89%80%E6%9C%89%E5%AE%BD%E9%AB%98/2020519-20200816015541809-143103147.png" alt="img"></p>
-]]></content>
-      <categories>
-        <category>javascript</category>
-      </categories>
-  </entry>
-  <entry>
     <title>CSS flex弹性盒子布局</title>
-    <url>/css/0/</url>
+    <url>/css/de355132/</url>
     <content><![CDATA[<p><strong>Flex是Flexible Box的缩写，意为“弹性盒子”，用来为盒装模型提供最大的灵活性。任何一个容器都可以指定为Flex布局。</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 1 &lt;style&gt;</span><br><span class="line"> 2   .box1 &#123;</span><br><span class="line"> 3     display: -webkit-flex; /* 在webkit内核的浏览器上使用要加前缀 */</span><br><span class="line"> 4     display: flex; /*将对象作为弹性伸缩盒显示*/</span><br><span class="line"> 5   &#125;</span><br><span class="line"> 6 </span><br><span class="line"> 7   /* 行内元素也可以使用flex布局 */</span><br><span class="line"> 8   .box2 &#123;</span><br><span class="line"> 9     display: inline-flex; /*将对象作为内联块级弹性伸缩盒显示*/</span><br><span class="line">10   &#125;</span><br><span class="line">11 </span><br><span class="line">12   /* 兼容性写法 */</span><br><span class="line">13   .box3 &#123;</span><br><span class="line">14     display: flex || inline-flex;</span><br><span class="line">15   &#125;</span><br><span class="line">16 &lt;/style&gt;</span><br></pre></td></tr></table></figure>
 
@@ -1598,8 +1589,17 @@
       </categories>
   </entry>
   <entry>
+    <title>JS 一图解决所有 宽高与位置 的获取</title>
+    <url>/javascript/818b50cc/</url>
+    <content><![CDATA[<p><img src="../../images/%E6%89%80%E6%9C%89%E5%AE%BD%E9%AB%98/2020519-20200816015541809-143103147.png" alt="img"></p>
+]]></content>
+      <categories>
+        <category>javascript</category>
+      </categories>
+  </entry>
+  <entry>
     <title>JS 向DOM中添加元素内容 - insertAdjacentHTML</title>
-    <url>/javascript/0/</url>
+    <url>/javascript/ed35deee/</url>
     <content><![CDATA[<p>一直是向dom中追加元素的操作就是,createElement 、appendChild等, 知道发现了更加灵活、方便的 insertAdjacentHTML</p>
 <h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><p>insertAdjacentHTML() 可以将文本解析成 Element 元素，并将结果节点追加到DOM树指定位置，它不会重新解析它正在使用的元素，因此它不会破坏元素内的现有元素。这避免了额外的序列化步骤，使其比直接使用innerHTML操作更快</p>
 <h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><p>element.insertAdjacentHTML(position, text);</p>
@@ -1622,7 +1622,7 @@
   </entry>
   <entry>
     <title>PHP_MySQL 联表操作增删改查</title>
-    <url>/mysql/0/</url>
+    <url>/mysql/d9d3bf06/</url>
     <content><![CDATA[<h4 id="联表查询"><a href="#联表查询" class="headerlink" title="联表查询"></a>联表查询</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select *,a.id from stu_message a inner join stu_detail b on a.id=b.sid</span><br></pre></td></tr></table></figure>
 
 <h4 id="联表删除"><a href="#联表删除" class="headerlink" title="联表删除"></a>联表删除</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">delete a,b from stu_message a inner join stu_detail b on a.id=b.sid where a.id=&#123;$id&#125;</span><br></pre></td></tr></table></figure>
@@ -1638,7 +1638,7 @@
   </entry>
   <entry>
     <title>MySQL 忘记root用户密码怎么办？ 简单3步解决</title>
-    <url>/mysql/0/</url>
+    <url>/mysql/bf4eb02/</url>
     <content><![CDATA[<blockquote>
 <p>1、找到mysql目录下mysql数据库目录，我用的wamp环境,参考图中我的路径</p>
 </blockquote>

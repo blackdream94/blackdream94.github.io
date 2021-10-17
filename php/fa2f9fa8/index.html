@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="使用的是tp框架 转自 ThinkPHP5生成抖音小程序带参数二维码_菜鸟何时能翻身-CSDN博客_抖音小程序二维码生成 获取accesstoken1234567891 public function get_access_token()2 &amp;#123;3     $appid &#x3D; &amp;#x27;tt301******3a416&amp;#x27;; &#x2F;&#x2F;配置appid4     $secret &#x3D; &amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP 抖音小程序二维码生成">
+<meta property="og:url" content="http://example.com/php/fa2f9fa8/index.html">
+<meta property="og:site_name" content="黑梦">
+<meta property="og:description" content="使用的是tp框架 转自 ThinkPHP5生成抖音小程序带参数二维码_菜鸟何时能翻身-CSDN博客_抖音小程序二维码生成 获取accesstoken1234567891 public function get_access_token()2 &amp;#123;3     $appid &#x3D; &amp;#x27;tt301******3a416&amp;#x27;; &#x2F;&#x2F;配置appid4     $secret &#x3D; &amp;#x">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-06-17T05:34:00.000Z">
+<meta property="article:modified_time" content="2021-10-17T16:28:32.363Z">
+<meta property="article:author" content="blackdream">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/php/fa2f9fa8/"/>
+
+
+
+
+
+  <title>PHP 抖音小程序二维码生成 | 黑梦</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">黑梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/php/fa2f9fa8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="黑梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP 抖音小程序二维码生成</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-17T13:34:00+08:00">
+                2021-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index">
+                    <span itemprop="name">php</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  904
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>使用的是tp框架</p>
+<p>转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34050360/article/details/106722409">ThinkPHP5生成抖音小程序带参数二维码_菜鸟何时能翻身-CSDN博客_抖音小程序二维码生成</a></p>
+<h2 id="获取accesstoken"><a href="#获取accesstoken" class="headerlink" title="获取accesstoken"></a>获取accesstoken</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1 public function get_access_token()</span><br><span class="line">2 &#123;</span><br><span class="line">3     $appid = &#x27;tt301******3a416&#x27;; //配置appid</span><br><span class="line">4     $secret = &#x27;0421128******65529&#x27;; //配置secret</span><br><span class="line">5     $url = &quot;https://developer.toutiao.com/api/apps/token?grant_type=client_credential&amp;appid=&quot; . $appid . &quot;&amp;secret=&quot; . $secret;</span><br><span class="line">6     $result = https_request($url);</span><br><span class="line">7     $Result = json_decode($result, true);</span><br><span class="line">8     return $Result[&#x27;access_token&#x27;];</span><br><span class="line">9 &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="生成带参数二维码"><a href="#生成带参数二维码" class="headerlink" title="生成带参数二维码"></a>生成带参数二维码</h2><blockquote>
+<p>存到服务器本地+路径存到用户指定字段用于二次分享的时候直接拿取对应带参数二维码</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"> 1 //获得抖音二维码</span><br><span class="line"> 2 public function dyshare()</span><br><span class="line"> 3 &#123;</span><br><span class="line"> 4 </span><br><span class="line"> 5     $spcode = request()-&gt;param(&#x27;spcode&#x27;, &#x27;&#x27;);</span><br><span class="line"> 6     $code = Db::name(&#x27;newuser&#x27;)-&gt;where(&#x27;spcode&#x27;, $spcode)-&gt;find();</span><br><span class="line"> 7     if (!$code) &#123;</span><br><span class="line"> 8         return json([&#x27;code&#x27; =&gt; 400, &#x27;message&#x27; =&gt; &#x27;用户不存在&#x27;, &#x27;data&#x27; =&gt; &#x27;&#x27;]);</span><br><span class="line"> 9     &#125;</span><br><span class="line">10     if ($code[&#x27;dyfxcode&#x27;] != &#x27;&#x27;) &#123;</span><br><span class="line">11         return json([&#x27;code&#x27; =&gt; 200, &#x27;message&#x27; =&gt; &#x27;获取成功&#x27;, &#x27;data&#x27; =&gt; request()-&gt;domain() . $code[&#x27;dyfxcode&#x27;]]);</span><br><span class="line">12     &#125;</span><br><span class="line">13 </span><br><span class="line">14     $qr_path = &quot;./uploads/&quot;;</span><br><span class="line">15     if (!file_exists($qr_path . &#x27;user/&#x27;)) &#123;</span><br><span class="line">16         mkdir($qr_path . &#x27;user/&#x27;, 0700, true); //判断保存目录是否存在，不存在自动生成文件目录</span><br><span class="line">17     &#125;</span><br><span class="line">18     $filename = &#x27;user/&#x27; . time() . &#x27;.png&#x27;;</span><br><span class="line">19     $file = $qr_path . $filename;</span><br><span class="line">20     $access_token = $this-&gt;get_access_token();</span><br><span class="line">21     $url = &#x27;https://developer.toutiao.com/api/apps/qrcode&#x27;;</span><br><span class="line">22 </span><br><span class="line">23     $qrcode = array(</span><br><span class="line">24         &#x27;access_token&#x27; =&gt; $access_token,</span><br><span class="line">25         &#x27;scene&#x27;         =&gt; $spcode, //二维码所带参数</span><br><span class="line">26         &#x27;appname&#x27;       =&gt; &#x27;douyin&#x27;,</span><br><span class="line">27         // &#x27;width&#x27;         =&gt; &#x27;430&#x27;,</span><br><span class="line">28         &#x27;path&#x27;          =&gt; urlencode(&quot;pages/index/index?spcode=&quot; . $spcode), //二维码跳转路径（要已发布小程序）</span><br><span class="line">29         // &#x27;platform&#x27;      =&gt; &#x27;miniapp&#x27;,</span><br><span class="line">30         // &quot;set_icon&quot; =&gt; true</span><br><span class="line">31     );</span><br><span class="line">32     $data = https_post($url, json_encode($qrcode)); //请求接口</span><br><span class="line">33     $filename = date(&#x27;YmdHis&#x27;) . rand(10000, 999999) . &#x27;.jpg&#x27;;</span><br><span class="line">34     $dir = ROOT_PATH . &#x27;public/uploads/douyin&#x27;;</span><br><span class="line">35     if (!is_dir($dir)) &#123;</span><br><span class="line">36         @mkdir($dir, 0777, true);</span><br><span class="line">37     &#125;</span><br><span class="line">38 </span><br><span class="line">39     $file = $dir . &#x27;/&#x27; . $filename;</span><br><span class="line">40     file_put_contents($file, $data);</span><br><span class="line">41 </span><br><span class="line">42     $retFile = &#x27;/uploads/douyin/&#x27; . $filename;</span><br><span class="line">43 </span><br><span class="line">44     Db::name(&#x27;newuser&#x27;)-&gt;where(&#x27;spcode&#x27;, $spcode)-&gt;update([&#x27;dyfxcode&#x27; =&gt; $retFile]);</span><br><span class="line">45 </span><br><span class="line">46     return json([&#x27;code&#x27; =&gt; 200, &#x27;message&#x27; =&gt; &#x27;获取成功&#x27;, &#x27;data&#x27; =&gt; request()-&gt;domain() . $retFile]);</span><br><span class="line">47 &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="直接返回图片"><a href="#直接返回图片" class="headerlink" title="直接返回图片"></a>直接返回图片</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="comment">//获得抖音二维码</span></span><br><span class="line"> <span class="number">2</span> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">dyshare</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"> 3 </span>&#123;</span><br><span class="line"> <span class="number">4</span>     <span class="variable">$spcode</span> = request()-&gt;param(<span class="string">&#x27;spcode&#x27;</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line"> <span class="number">5</span>     <span class="variable">$access_token</span> = <span class="keyword">$this</span>-&gt;get_access_token();</span><br><span class="line"> <span class="number">6</span>     <span class="variable">$url</span> = <span class="string">&#x27;https://developer.toutiao.com/api/apps/qrcode&#x27;</span>;</span><br><span class="line"> <span class="number">7</span>     <span class="variable">$qrcode</span> = <span class="keyword">array</span>(</span><br><span class="line"> <span class="number">8</span>         <span class="string">&#x27;access_token&#x27;</span> =&gt; <span class="variable">$access_token</span>,</span><br><span class="line"> <span class="number">9</span>         <span class="string">&#x27;scene&#x27;</span>         =&gt; <span class="variable">$spcode</span>, <span class="comment">//二维码所带参数</span></span><br><span class="line"><span class="number">10</span>         <span class="string">&#x27;appname&#x27;</span>       =&gt; <span class="string">&#x27;douyin&#x27;</span>,</span><br><span class="line"><span class="number">11</span>         <span class="comment">// &#x27;width&#x27;         =&gt; &#x27;430&#x27;,</span></span><br><span class="line"><span class="number">12</span>         <span class="string">&#x27;path&#x27;</span>          =&gt; urlencode(<span class="string">&quot;pages/index/index?spcode=&quot;</span> . <span class="variable">$spcode</span>), <span class="comment">//二维码跳转路径（要已发布小程序）</span></span><br><span class="line"><span class="number">13</span>         <span class="comment">// &#x27;platform&#x27;      =&gt; &#x27;miniapp&#x27;,</span></span><br><span class="line"><span class="number">14</span>         <span class="comment">// &quot;set_icon&quot; =&gt; true</span></span><br><span class="line"><span class="number">15</span>     );</span><br><span class="line"><span class="number">16</span>     <span class="variable">$data</span> = https_post(<span class="variable">$url</span>, json_encode(<span class="variable">$qrcode</span>)); <span class="comment">//请求接口</span></span><br><span class="line"><span class="number">17</span>     <span class="keyword">return</span> response(<span class="variable">$data</span>, <span class="number">200</span>, [<span class="string">&#x27;Content-Length&#x27;</span> =&gt; strlen(<span class="variable">$data</span>)])-&gt;contentType(<span class="string">&#x27;image/png&#x27;</span>);</span><br><span class="line"><span class="number">18</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h2><p>可以直接放在公共函数库application/common.php里面</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="comment">#curl请求</span></span><br><span class="line"> <span class="number">2</span> <span class="keyword">if</span> (!function_exists(<span class="string">&#x27;https_request&#x27;</span>)) &#123;</span><br><span class="line"> <span class="number">3</span>     <span class="function"><span class="keyword">function</span> <span class="title">https_request</span>(<span class="params"><span class="variable">$url</span>, <span class="variable">$data</span> = <span class="literal">null</span></span>)</span></span><br><span class="line"><span class="function"> 4     </span>&#123;</span><br><span class="line"> <span class="number">5</span>         <span class="keyword">if</span> (function_exists(<span class="string">&#x27;curl_init&#x27;</span>)) &#123;</span><br><span class="line"> <span class="number">6</span>             <span class="variable">$curl</span> = curl_init();</span><br><span class="line"> <span class="number">7</span>             curl_setopt(<span class="variable">$curl</span>, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);</span><br><span class="line"> <span class="number">8</span>             curl_setopt(<span class="variable">$curl</span>, CURLOPT_URL, <span class="variable">$url</span>);</span><br><span class="line"> <span class="number">9</span>             curl_setopt(<span class="variable">$curl</span>, CURLOPT_SSL_VERIFYPEER, <span class="literal">FALSE</span>);</span><br><span class="line"><span class="number">10</span>             curl_setopt(<span class="variable">$curl</span>, CURLOPT_SSL_VERIFYHOST, <span class="literal">FALSE</span>);</span><br><span class="line"><span class="number">11</span>             curl_setopt(<span class="variable">$curl</span>, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1);</span><br><span class="line"><span class="number">12</span>             curl_setopt(<span class="variable">$curl</span>, CURLOPT_FOLLOWLOCATION, <span class="number">1</span>);</span><br><span class="line"><span class="number">13</span>             <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$data</span>)) &#123;</span><br><span class="line"><span class="number">14</span>                 curl_setopt(<span class="variable">$curl</span>, CURLOPT_POST, <span class="number">1</span>);</span><br><span class="line"><span class="number">15</span>                 curl_setopt(<span class="variable">$curl</span>, CURLOPT_POSTFIELDS, <span class="variable">$data</span>);</span><br><span class="line"><span class="number">16</span>             &#125;</span><br><span class="line"><span class="number">17</span>             curl_setopt(<span class="variable">$curl</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);</span><br><span class="line"><span class="number">18</span>             <span class="variable">$output</span> = curl_exec(<span class="variable">$curl</span>);</span><br><span class="line"><span class="number">19</span>             curl_close(<span class="variable">$curl</span>);</span><br><span class="line"><span class="number">20</span>             <span class="keyword">return</span> <span class="variable">$output</span>;</span><br><span class="line"><span class="number">21</span>         &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="number">22</span>             <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"><span class="number">23</span>         &#125;</span><br><span class="line"><span class="number">24</span>     &#125;</span><br><span class="line"><span class="number">25</span> &#125;</span><br><span class="line"><span class="number">26</span> <span class="comment">#post请求</span></span><br><span class="line"><span class="number">27</span> <span class="keyword">if</span> (!function_exists(<span class="string">&#x27;https_post&#x27;</span>)) &#123;</span><br><span class="line"><span class="number">28</span>     <span class="function"><span class="keyword">function</span> <span class="title">https_post</span>(<span class="params"><span class="variable">$url</span>, <span class="variable">$data</span></span>)</span></span><br><span class="line"><span class="function">29     </span>&#123;</span><br><span class="line"><span class="number">30</span>         <span class="variable">$curl</span> = curl_init();</span><br><span class="line"><span class="number">31</span>         curl_setopt(<span class="variable">$curl</span>, CURLOPT_URL, <span class="variable">$url</span>);</span><br><span class="line"><span class="number">32</span>         curl_setopt(<span class="variable">$curl</span>, CURLOPT_SSL_VERIFYHOST, <span class="literal">false</span>);</span><br><span class="line"><span class="number">33</span>         curl_setopt(<span class="variable">$curl</span>, CURLOPT_SSL_VERIFYPEER, <span class="literal">false</span>);</span><br><span class="line"><span class="number">34</span>         curl_setopt(<span class="variable">$curl</span>, CURLOPT_POST, <span class="number">1</span>);</span><br><span class="line"><span class="number">35</span>         curl_setopt(<span class="variable">$curl</span>, CURLOPT_POSTFIELDS, <span class="variable">$data</span>);</span><br><span class="line"><span class="number">36</span>         curl_setopt(<span class="variable">$curl</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);</span><br><span class="line"><span class="number">37</span>         curl_setopt(<span class="variable">$curl</span>, CURLOPT_HTTPHEADER, <span class="keyword">array</span>(<span class="string">&#x27;Content-Type: application/json&#x27;</span>, <span class="string">&#x27;Content-Length: &#x27;</span> . strlen(<span class="variable">$data</span>)));</span><br><span class="line"><span class="number">38</span>         <span class="comment">// dump($curl);</span></span><br><span class="line"><span class="number">39</span>         <span class="variable">$result</span> = curl_exec(<span class="variable">$curl</span>);</span><br><span class="line"><span class="number">40</span>         <span class="keyword">if</span> (curl_errno(<span class="variable">$curl</span>)) &#123;</span><br><span class="line"><span class="number">41</span>             <span class="keyword">return</span> <span class="string">&#x27;Errno&#x27;</span> . curl_errno(<span class="variable">$curl</span>);</span><br><span class="line"><span class="number">42</span>         &#125;</span><br><span class="line"><span class="number">43</span>         curl_close(<span class="variable">$curl</span>);</span><br><span class="line"><span class="number">44</span>         <span class="keyword">return</span> <span class="variable">$result</span>;</span><br><span class="line"><span class="number">45</span>     &#125;</span><br><span class="line"><span class="number">46</span> &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/javascript/84c09c95/" rel="next" title="js ajax提交表单内容(和图片文件)">
+                <i class="fa fa-chevron-left"></i> js ajax提交表单内容(和图片文件)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/memcached/1ddd81de/" rel="prev" title="PHP 封装Memcached类">
+                PHP 封装Memcached类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96accesstoken"><span class="nav-number">1.</span> <span class="nav-text">获取accesstoken</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%B8%A6%E5%8F%82%E6%95%B0%E4%BA%8C%E7%BB%B4%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">生成带参数二维码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E8%BF%94%E5%9B%9E%E5%9B%BE%E7%89%87"><span class="nav-number">3.</span> <span class="nav-text">直接返回图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82"><span class="nav-number">4.</span> <span class="nav-text">请求</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">blackdream</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">33.7k</span>
+  
+</div>
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('copy').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('/n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('success')
+          else $(this).text('fail')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('copy')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

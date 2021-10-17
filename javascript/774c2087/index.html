@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="转自：https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;342672565 问题我想要达成一个选择完图片就可以直接预览的效果，文档中也写明了localId可以作为img的src属性显示图片， 我的操作是，选择完图片之后，直接将 localId 赋给 img的src属性，但是结果不显示 通过搜贴，发现自己忽略了文档中的这一条信息  不显示原因有二  版本低于1.2.0，我使用的是1.0.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信JS-SDK wx.chooseImage选择并预览图片，并上传到自己服务器">
+<meta property="og:url" content="http://example.com/javascript/774c2087/index.html">
+<meta property="og:site_name" content="黑梦">
+<meta property="og:description" content="转自：https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;342672565 问题我想要达成一个选择完图片就可以直接预览的效果，文档中也写明了localId可以作为img的src属性显示图片， 我的操作是，选择完图片之后，直接将 localId 赋给 img的src属性，但是结果不显示 通过搜贴，发现自己忽略了文档中的这一条信息  不显示原因有二  版本低于1.2.0，我使用的是1.0.0">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/wxjs-sdk_wx.chooseImage%E9%80%89%E6%8B%A9%E5%B9%B6%E9%A2%84%E8%A7%88%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E8%87%AA%E5%B7%B1%E6%9C%8D%E5%8A%A1%E5%99%A8/2020519-20210115102751259-563109486.png">
+<meta property="article:published_time" content="2021-01-06T02:05:00.000Z">
+<meta property="article:modified_time" content="2021-10-17T16:30:56.385Z">
+<meta property="article:author" content="blackdream">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/wxjs-sdk_wx.chooseImage%E9%80%89%E6%8B%A9%E5%B9%B6%E9%A2%84%E8%A7%88%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E8%87%AA%E5%B7%B1%E6%9C%8D%E5%8A%A1%E5%99%A8/2020519-20210115102751259-563109486.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/javascript/774c2087/"/>
+
+
+
+
+
+  <title>微信JS-SDK wx.chooseImage选择并预览图片，并上传到自己服务器 | 黑梦</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">黑梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/javascript/774c2087/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="黑梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微信JS-SDK wx.chooseImage选择并预览图片，并上传到自己服务器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-06T10:05:00+08:00">
+                2021-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>转自：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/342672565">https://zhuanlan.zhihu.com/p/342672565</a></p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>我想要达成一个选择完图片就可以直接预览的效果，文档中也写明了localId可以作为img的src属性显示图片，</p>
+<p>我的操作是，选择完图片之后，直接将 localId 赋给 img的src属性，但是结果不显示</p>
+<p>通过搜贴，发现自己忽略了文档中的这一条信息</p>
+<p><img src="../../images/wxjs-sdk_wx.chooseImage%E9%80%89%E6%8B%A9%E5%B9%B6%E9%A2%84%E8%A7%88%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E8%87%AA%E5%B7%B1%E6%9C%8D%E5%8A%A1%E5%99%A8/2020519-20210115102751259-563109486.png" alt="img"></p>
+<p>不显示原因有二</p>
+<ol>
+<li>版本低于1.2.0，我使用的是1.0.0</li>
+<li>用 getLocalImgData 接口获取的数据，苹果可以直接赋值，但是安卓有一个坑，在拼接前需要对localData进行换行符的全局替换</li>
+</ol>
+<h2 id="wx-chooseImage选择并预览图片，并上传到自己服务器"><a href="#wx-chooseImage选择并预览图片，并上传到自己服务器" class="headerlink" title="wx.chooseImage选择并预览图片，并上传到自己服务器"></a>wx.chooseImage选择并预览图片，并上传到自己服务器</h2><h3 id="注意-引入JS文件"><a href="#注意-引入JS文件" class="headerlink" title="注意 引入JS文件"></a>注意 引入JS文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 推荐使用1.3.2以上的版本，之前的版本很多坑 </span><br><span class="line">https://res.wx.qq.com/open/js/jweixin-1.3.2.js</span><br><span class="line">// 也可以用npm包</span><br><span class="line">npm install weixin-js-sdk</span><br></pre></td></tr></table></figure>
+
+<h3 id="选择图片"><a href="#选择图片" class="headerlink" title="选择图片"></a>选择图片</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wx.chooseImage(&#123;</span><br><span class="line">    <span class="attr">count</span>: <span class="number">1</span>, <span class="comment">// 默认9</span></span><br><span class="line">    <span class="attr">sizeType</span>: [<span class="string">&#x27;original&#x27;</span>, <span class="string">&#x27;compressed&#x27;</span>], <span class="comment">// 可以指定是原图还是压缩图，默认二者都有</span></span><br><span class="line">    <span class="attr">sourceType</span>: [<span class="string">&#x27;album&#x27;</span>, <span class="string">&#x27;camera&#x27;</span>], <span class="comment">// 可以指定来源是相册还是相机，默认二者都有</span></span><br><span class="line">    <span class="attr">success</span>: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> localIds = res.localIds; <span class="comment">// array,返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="处理图片数据为base64"><a href="#处理图片数据为base64" class="headerlink" title="处理图片数据为base64"></a>处理图片数据为base64</h3><p><code>wx.chooseImage</code>获取到的图片为一个临时路径，微信同时提供了<code>wx.getLocalImgData</code>方法可以把获取到的路径转为base64格式的数据，至此就可以轻松许多了，但是转出来的base64在android和iOS中稍有不同，需要特别注意一下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">wx.getLocalImgData(&#123;</span><br><span class="line">          <span class="attr">localId</span>: res.localIds[<span class="number">0</span>], <span class="comment">// 图片的localID</span></span><br><span class="line">          <span class="attr">success</span>: <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">const</span> localData = res.localData;</span><br><span class="line">            <span class="keyword">let</span> imageBase64 = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span> (localData.indexOf(<span class="string">&#x27;data:image&#x27;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">              <span class="comment">//苹果的直接赋值，默认生成&#x27;data:image/jpeg;base64,&#x27;的头部拼接</span></span><br><span class="line">              imageBase64 = localData;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              <span class="comment">//此处是安卓中的唯一得坑！在拼接前需要对localData进行换行符的全局替换</span></span><br><span class="line">              <span class="comment">//此时一个正常的base64图片路径就完美生成赋值到img的src中了</span></span><br><span class="line">              imageBase64 = <span class="string">&#x27;data:image/jpeg;base64,&#x27;</span> + localData.replace(<span class="regexp">/\n/g</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            $(<span class="string">&#x27;#img&#x27;</span>).attr(<span class="string">&#x27;src&#x27;</span>, imageBase64);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="上传图片"><a href="#上传图片" class="headerlink" title="上传图片"></a>上传图片</h3><p>获取到图片的base64数据之后其实我们就可以为所欲为了，不需要使用<code>wx.uploadImage</code>和<code>wx.downloadImage</code>了，不仅需要麻烦的上传到微信服务器，还有三天的时间限制反而增加了成本，最好的方式就是直接上传至我们自己的服务器。</p>
+<p>一般与服务端交互的这种文件类型一般采用表单提交–multipart/form-data的方式，这就要求我们熟悉传输form-data的数据交互，所以需要把刚才获取到的base64转为可post的二进制数据，JavaScript提供了原生的<code>atob/btoa</code>用来对base64进行编码和解码；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dataURLtoBlob</span>(<span class="params">dataurl</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> arr = dataurl.split(<span class="string">&#x27;,&#x27;</span>);</span><br><span class="line">    <span class="keyword">let</span> mime = arr[<span class="number">0</span>].match(<span class="regexp">/:(.*?);/</span>)[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">let</span> bstr = atob(arr[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">let</span> n = bstr.length;</span><br><span class="line">    <span class="keyword">let</span> u8arr = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(n);</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">      u8arr[n] = bstr.charCodeAt(n);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Blob([u8arr], &#123;</span><br><span class="line">      <span class="attr">type</span>: mime</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>ok,处理好可交互的数据就可以上传到自己的服务器了，之后相当于普通H5页面的图片交互了,可上传可下载</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> param = <span class="keyword">new</span> FormData();</span><br><span class="line">param.append(<span class="string">&#x27;headPic&#x27;</span>, imageData);</span><br><span class="line">$.ajax(&#123;</span><br><span class="line">  <span class="attr">url</span>: <span class="string">&quot;http://www.xxx.com/upimg.php&quot;</span>, <span class="comment">// 填写你的url地址</span></span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;post&quot;</span>,</span><br><span class="line">  <span class="attr">data</span>: param,</span><br><span class="line">  <span class="attr">dataType</span>: <span class="string">&#x27;JSON&#x27;</span>, <span class="comment">// 服务器响应的数据类型</span></span><br><span class="line">  <span class="attr">processData</span>: <span class="literal">false</span>, <span class="comment">// 因为data值是FormData对象，不需要对数据做处理</span></span><br><span class="line">  <span class="attr">contentType</span>: <span class="literal">false</span>, <span class="comment">// 告诉jQuery不要去设置Content-Type请求头</span></span><br><span class="line">  <span class="attr">cache</span>: <span class="literal">false</span>, <span class="comment">// 上传文件不需要缓存</span></span><br><span class="line">  <span class="attr">success</span>: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    alert(<span class="string">&#x27;请求成功&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>后台获取到的代码是这样的</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable">$_FILES</span>) &#123;</span><br><span class="line">    file_put_contents(<span class="string">&#x27;../test.log&#x27;</span>, json_encode(<span class="variable">$_FILES</span>));</span><br><span class="line">    <span class="keyword">echo</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123;&quot;headPic&quot;:&#123;&quot;name&quot;:&quot;blob&quot;,&quot;type&quot;:&quot;image\/jpg&quot;,&quot;tmp_name&quot;:&quot;\/tmp\/phpX8kcxh&quot;,&quot;error&quot;:0,&quot;size&quot;:37937&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>之后就可以在后台完成上传代码的操作的，服务器接收传过来的图片并上传到服务器的操作，请参考 —— <a target="_blank" rel="noopener" href="https://www.cnblogs.com/jiuhefree/articles/14239805.html">《PHP CURL的用法及上传图片》</a>，在最下面的一段代码</p>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><p>我这个是直接在官方示例模板中改写的，官方示例下载地址：<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#67">https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#67</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line">  <span class="number">1</span> <span class="meta">&lt;?php</span></span><br><span class="line">  <span class="number">2</span> <span class="keyword">require_once</span> <span class="string">&quot;jssdk.php&quot;</span>;</span><br><span class="line">  <span class="number">3</span> <span class="variable">$jssdk</span> = <span class="keyword">new</span> JSSDK(<span class="string">&quot;你的appId&quot;</span>, <span class="string">&quot;你的appSecret&quot;</span>);</span><br><span class="line">  <span class="number">4</span> <span class="variable">$signPackage</span> = <span class="variable">$jssdk</span>-&gt;GetSignPackage();</span><br><span class="line">  <span class="number">5</span> <span class="meta">?&gt;</span></span><br><span class="line">  <span class="number">6</span> &lt;!DOCTYPE html&gt;</span><br><span class="line">  <span class="number">7</span> &lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">  <span class="number">8</span> </span><br><span class="line">  <span class="number">9</span> &lt;head&gt;</span><br><span class="line"> <span class="number">10</span>   &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line"> <span class="number">11</span>   &lt;meta content=<span class="string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0&quot;</span> name=<span class="string">&quot;viewport&quot;</span>&gt;</span><br><span class="line"> <span class="number">12</span>   &lt;title&gt;&lt;/title&gt;</span><br><span class="line"> <span class="number">13</span> &lt;/head&gt;</span><br><span class="line"> <span class="number">14</span> </span><br><span class="line"> <span class="number">15</span> &lt;body&gt;</span><br><span class="line"> <span class="number">16</span>   &lt;button id=<span class="string">&quot;button2&quot;</span>&gt;拍照或从手机相册中选图接口&lt;/button&gt;&lt;br /&gt;</span><br><span class="line"> <span class="number">17</span>   &lt;button onclick=<span class="string">&quot;updateImg()&quot;</span>&gt;确认上传&lt;/button&gt;&lt;br /&gt;</span><br><span class="line"> <span class="number">18</span>   &lt;img src=<span class="string">&quot;&quot;</span> id=<span class="string">&quot;img&quot;</span> width=<span class="string">&quot;150px&quot;</span> height=<span class="string">&quot;150px&quot;</span>&gt;&lt;br /&gt;</span><br><span class="line"> <span class="number">19</span> &lt;/body&gt;</span><br><span class="line"> <span class="number">20</span> &lt;script src=<span class="string">&quot;https://cdn.bootcss.com/jquery/3.4.1/jquery.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"> <span class="number">21</span> &lt;script src=<span class="string">&quot;https://res.wx.qq.com/open/js/jweixin-1.6.0.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"> <span class="number">22</span> &lt;script&gt;</span><br><span class="line"> <span class="number">23</span>   <span class="comment">/*</span></span><br><span class="line"><span class="comment"> 24    * 注意：</span></span><br><span class="line"><span class="comment"> 25    * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。</span></span><br><span class="line"><span class="comment"> 26    * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。</span></span><br><span class="line"><span class="comment"> 27    * 3. 常见问题及完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html</span></span><br><span class="line"><span class="comment"> 28    *</span></span><br><span class="line"><span class="comment"> 29    * 开发中遇到问题详见文档“附录5-常见错误及解决办法”解决，如仍未能解决可通过以下渠道反馈：</span></span><br><span class="line"><span class="comment"> 30    * 邮箱地址：weixin-open<span class="doctag">@qq</span>.com</span></span><br><span class="line"><span class="comment"> 31    * 邮件主题：【微信JS-SDK反馈】具体问题</span></span><br><span class="line"><span class="comment"> 32    * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。</span></span><br><span class="line"><span class="comment"> 33    */</span></span><br><span class="line"> <span class="number">34</span>   wx.config(&#123;</span><br><span class="line"> <span class="number">35</span>     debug: <span class="literal">false</span>, <span class="comment">// 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。</span></span><br><span class="line"> <span class="number">36</span>     appId: <span class="string">&#x27;&lt;?php echo $signPackage[&quot;appId&quot;]; ?&gt;&#x27;</span>, <span class="comment">// 必填</span></span><br><span class="line"> <span class="number">37</span>     timestamp: <span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="variable">$signPackage</span>[<span class="string">&quot;timestamp&quot;</span>]; <span class="meta">?&gt;</span>, <span class="comment">// 必填，生成签名的时间戳</span></span><br><span class="line"> <span class="number">38</span>     nonceStr: <span class="string">&#x27;&lt;?php echo $signPackage[&quot;nonceStr&quot;]; ?&gt;&#x27;</span>, <span class="comment">// 必填，生成签名的随机串</span></span><br><span class="line"> <span class="number">39</span>     signature: <span class="string">&#x27;&lt;?php echo $signPackage[&quot;signature&quot;]; ?&gt;&#x27;</span>, <span class="comment">// 必填，签名</span></span><br><span class="line"> <span class="number">40</span>     jsApiList: [ <span class="comment">// 必填</span></span><br><span class="line"> <span class="number">41</span>       <span class="comment">// 所有要调用的 API 都要加到这个列表中</span></span><br><span class="line"> <span class="number">42</span>       <span class="string">&#x27;onMenuShareAppMessage&#x27;</span>,</span><br><span class="line"> <span class="number">43</span>       <span class="string">&#x27;chooseImage&#x27;</span>,</span><br><span class="line"> <span class="number">44</span>       <span class="string">&#x27;getLocalImgData&#x27;</span></span><br><span class="line"> <span class="number">45</span>     ]</span><br><span class="line"> <span class="number">46</span>   &#125;);</span><br><span class="line"> <span class="number">47</span>   wx.ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="number">48</span>     <span class="comment">// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。</span></span><br><span class="line"> <span class="number">49</span>     <span class="comment">// 在这里调用 API</span></span><br><span class="line"> <span class="number">50</span>   &#125;);</span><br><span class="line"> <span class="number">51</span> </span><br><span class="line"> <span class="number">52</span>   <span class="keyword">var</span> image_base64 = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"> <span class="number">53</span> </span><br><span class="line"> <span class="number">54</span>   $(<span class="string">&#x27;#button2&#x27;</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="number">55</span>     <span class="keyword">var</span> images = &#123;</span><br><span class="line"> <span class="number">56</span>       localId: [],</span><br><span class="line"> <span class="number">57</span>       serverId: []</span><br><span class="line"> <span class="number">58</span>     &#125;;</span><br><span class="line"> <span class="number">59</span>     <span class="comment">// 选择图片</span></span><br><span class="line"> <span class="number">60</span>     wx.chooseImage(&#123;</span><br><span class="line"> <span class="number">61</span>       count: <span class="number">1</span>, <span class="comment">// 默认9</span></span><br><span class="line"> <span class="number">62</span>       sizeType: [<span class="string">&#x27;original&#x27;</span>, <span class="string">&#x27;compressed&#x27;</span>], <span class="comment">// 可以指定是原图还是压缩图，默认二者都有</span></span><br><span class="line"> <span class="number">63</span>       sourceType: [<span class="string">&#x27;album&#x27;</span>, <span class="string">&#x27;camera&#x27;</span>], <span class="comment">// 可以指定来源是相册还是相机，默认二者都有</span></span><br><span class="line"> <span class="number">64</span>       success: <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line"> <span class="number">65</span>         <span class="comment">// wx.chooseImage获取到的图片为一个临时路径，微信同时提供了wx.getLocalImgData方法可以把获取到的路径转为base64格式的数据，至此就可以轻松许多了，但是转出来的base64在android和iOS中稍有不同</span></span><br><span class="line"> <span class="number">66</span>         wx.getLocalImgData(&#123;</span><br><span class="line"> <span class="number">67</span>           localId: res.localIds[<span class="number">0</span>], <span class="comment">// 图片的localID</span></span><br><span class="line"> <span class="number">68</span>           success: <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line"> <span class="number">69</span>             <span class="keyword">const</span> localData = res.localData;</span><br><span class="line"> <span class="number">70</span>             let imageBase64 = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"> <span class="number">71</span>             <span class="keyword">if</span> (localData.indexOf(<span class="string">&#x27;data:image&#x27;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line"> <span class="number">72</span>               <span class="comment">//苹果的直接赋值，默认生成&#x27;data:image/jpeg;base64,&#x27;的头部拼接</span></span><br><span class="line"> <span class="number">73</span>               imageBase64 = localData;</span><br><span class="line"> <span class="number">74</span>             &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"> <span class="number">75</span>               <span class="comment">//此处是安卓中的唯一得坑！在拼接前需要对localData进行换行符的全局替换</span></span><br><span class="line"> <span class="number">76</span>               <span class="comment">//此时一个正常的base64图片路径就完美生成赋值到img的src中了</span></span><br><span class="line"> <span class="number">77</span>               imageBase64 = <span class="string">&#x27;data:image/jpeg;base64,&#x27;</span> + localData.replace(/\n/g, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line"> <span class="number">78</span>             &#125;</span><br><span class="line"> <span class="number">79</span>             image_base64 = imageBase64;</span><br><span class="line"> <span class="number">80</span>             $(<span class="string">&#x27;#img&#x27;</span>).attr(<span class="string">&#x27;src&#x27;</span>, imageBase64);</span><br><span class="line"> <span class="number">81</span>           &#125;</span><br><span class="line"> <span class="number">82</span>         &#125;);</span><br><span class="line"> <span class="number">83</span>       &#125;</span><br><span class="line"> <span class="number">84</span>     &#125;);</span><br><span class="line"> <span class="number">85</span>   &#125;);</span><br><span class="line"> <span class="number">86</span> </span><br><span class="line"> <span class="number">87</span>   <span class="comment">/**</span></span><br><span class="line"><span class="comment"> 88    * 点击上传图片按钮</span></span><br><span class="line"><span class="comment"> 89    */</span></span><br><span class="line"> <span class="number">90</span>   <span class="function"><span class="keyword">function</span> <span class="title">updateImg</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="number">91</span>     <span class="keyword">if</span> (image_base64 == <span class="string">&#x27;&#x27;</span>) &#123;</span><br><span class="line"> <span class="number">92</span>       alert(<span class="string">&#x27;请先选择图片&#x27;</span>);</span><br><span class="line"> <span class="number">93</span>       <span class="keyword">return</span>;</span><br><span class="line"> <span class="number">94</span>     &#125;</span><br><span class="line"> <span class="number">95</span>     handleAvatar(dataURLtoBlob(image_base64));</span><br><span class="line"> <span class="number">96</span>   &#125;</span><br><span class="line"> <span class="number">97</span> </span><br><span class="line"> <span class="number">98</span>   <span class="comment">/**</span></span><br><span class="line"><span class="comment"> 99    * ajax上传图片</span></span><br><span class="line"><span class="comment">100    */</span></span><br><span class="line"><span class="number">101</span>   <span class="function"><span class="keyword">function</span> <span class="title">handleAvatar</span>(<span class="params">imageData</span>) </span>&#123;</span><br><span class="line"><span class="number">102</span>     <span class="keyword">var</span> param = <span class="keyword">new</span> FormData();</span><br><span class="line"><span class="number">103</span>     param.append(<span class="string">&#x27;headPic&#x27;</span>, imageData);</span><br><span class="line"><span class="number">104</span>     $.ajax(&#123;</span><br><span class="line"><span class="number">105</span>       url: <span class="string">&quot;http://www.xxx.com/upimg.php&quot;</span>, <span class="comment">// 填写你的url地址</span></span><br><span class="line"><span class="number">106</span>       type: <span class="string">&quot;post&quot;</span>,</span><br><span class="line"><span class="number">107</span>       data: param,</span><br><span class="line"><span class="number">108</span>       dataType: <span class="string">&#x27;JSON&#x27;</span>, <span class="comment">// 服务器响应的数据类型</span></span><br><span class="line"><span class="number">109</span>       processData: <span class="literal">false</span>, <span class="comment">// 因为data值是FormData对象，不需要对数据做处理</span></span><br><span class="line"><span class="number">110</span>       contentType: <span class="literal">false</span>, <span class="comment">// 告诉jQuery不要去设置Content-Type请求头</span></span><br><span class="line"><span class="number">111</span>       cache: <span class="literal">false</span>, <span class="comment">// 上传文件不需要缓存</span></span><br><span class="line"><span class="number">112</span>       success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line"><span class="number">113</span>         <span class="comment">// ...</span></span><br><span class="line"><span class="number">114</span>         alert(<span class="string">&#x27;请求成功&#x27;</span>);</span><br><span class="line"><span class="number">115</span>       &#125;</span><br><span class="line"><span class="number">116</span>     &#125;);</span><br><span class="line"><span class="number">117</span>   &#125;;</span><br><span class="line"><span class="number">118</span> </span><br><span class="line"><span class="number">119</span>   <span class="comment">/**</span></span><br><span class="line"><span class="comment">120    * base64转为可post的二进制数据</span></span><br><span class="line"><span class="comment">121    */</span></span><br><span class="line"><span class="number">122</span>   <span class="function"><span class="keyword">function</span> <span class="title">dataURLtoBlob</span>(<span class="params">dataurl</span>) </span>&#123;</span><br><span class="line"><span class="number">123</span>     let arr = dataurl.split(<span class="string">&#x27;,&#x27;</span>);</span><br><span class="line"><span class="number">124</span>     let mime = arr[<span class="number">0</span>].<span class="keyword">match</span>(/:(.*?);/)[<span class="number">1</span>];</span><br><span class="line"><span class="number">125</span>     let bstr = atob(arr[<span class="number">1</span>]);</span><br><span class="line"><span class="number">126</span>     let n = bstr.length;</span><br><span class="line"><span class="number">127</span>     let u8arr = <span class="keyword">new</span> Uint8Array(n);</span><br><span class="line"><span class="number">128</span>     <span class="keyword">while</span> (n--) &#123;</span><br><span class="line"><span class="number">129</span>       u8arr[n] = bstr.charCodeAt(n);</span><br><span class="line"><span class="number">130</span>     &#125;</span><br><span class="line"><span class="number">131</span>     <span class="keyword">return</span> <span class="keyword">new</span> Blob([u8arr], &#123;</span><br><span class="line"><span class="number">132</span>       type: mime</span><br><span class="line"><span class="number">133</span>     &#125;);</span><br><span class="line"><span class="number">134</span>   &#125;;</span><br><span class="line"><span class="number">135</span> &lt;/script&gt;</span><br><span class="line"><span class="number">136</span> </span><br><span class="line"><span class="number">137</span> &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/mysql/ad16af82/" rel="next" title="MySQL 利用mysqlbinlog二进制文件还原指定数据库">
+                <i class="fa fa-chevron-left"></i> MySQL 利用mysqlbinlog二进制文件还原指定数据库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/php/6cbf48b/" rel="prev" title="PHP call_user_func() 和 call_user_func_array()">
+                PHP call_user_func() 和 call_user_func_array() <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wx-chooseImage%E9%80%89%E6%8B%A9%E5%B9%B6%E9%A2%84%E8%A7%88%E5%9B%BE%E7%89%87%EF%BC%8C%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E8%87%AA%E5%B7%B1%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">wx.chooseImage选择并预览图片，并上传到自己服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F-%E5%BC%95%E5%85%A5JS%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">注意 引入JS文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%9B%BE%E7%89%87"><span class="nav-number">2.2.</span> <span class="nav-text">选择图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%9B%BE%E7%89%87%E6%95%B0%E6%8D%AE%E4%B8%BAbase64"><span class="nav-number">2.3.</span> <span class="nav-text">处理图片数据为base64</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87"><span class="nav-number">2.4.</span> <span class="nav-text">上传图片</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">完整代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">blackdream</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">33.7k</span>
+  
+</div>
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('copy').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('/n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('success')
+          else $(this).text('fail')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('copy')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

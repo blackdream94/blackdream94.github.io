@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="层级结构，也叫树形结构。在关系型数据库中保存树状结构数据，常用的方法有两种：  邻接表（Adjacency List） 修改过的前序遍历算法（MPTT）  要存储的树状结构数据图如下 表名：Food  邻接表 邻接表依赖于pid字段连接上下级。id为自增主键，pid为上一节点的id，例如：Apple的上一节点是Red，所以 Apple pid &#x3D; Red id 打印树结构1234567891011">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP MySQL 存储层级结构的两种方式 邻接表和MPTT">
+<meta property="og:url" content="http://example.com/php/9f25a75e/index.html">
+<meta property="og:site_name" content="黑梦">
+<meta property="og:description" content="层级结构，也叫树形结构。在关系型数据库中保存树状结构数据，常用的方法有两种：  邻接表（Adjacency List） 修改过的前序遍历算法（MPTT）  要存储的树状结构数据图如下 表名：Food  邻接表 邻接表依赖于pid字段连接上下级。id为自增主键，pid为上一节点的id，例如：Apple的上一节点是Red，所以 Apple pid &#x3D; Red id 打印树结构1234567891011">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907161948118-1433800629.png">
+<meta property="og:image" content="http://example.com/images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907162553553-1389987265.png">
+<meta property="og:image" content="http://example.com/images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907165734324-222101891.png">
+<meta property="og:image" content="http://example.com/images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907171305742-690483127.png">
+<meta property="og:image" content="http://example.com/images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907173718398-142753577.png">
+<meta property="og:image" content="http://example.com/images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907173916394-1026923981.png">
+<meta property="article:published_time" content="2020-09-07T10:19:00.000Z">
+<meta property="article:modified_time" content="2021-10-17T16:28:19.116Z">
+<meta property="article:author" content="blackdream">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907161948118-1433800629.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/php/9f25a75e/"/>
+
+
+
+
+
+  <title>PHP MySQL 存储层级结构的两种方式 邻接表和MPTT | 黑梦</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">黑梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/php/9f25a75e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="黑梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP MySQL 存储层级结构的两种方式 邻接表和MPTT</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-07T18:19:00+08:00">
+                2020-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index">
+                    <span itemprop="name">php</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>层级结构，也叫树形结构。在关系型数据库中保存树状结构数据，常用的方法有两种：</p>
+<ul>
+<li>邻接表（Adjacency List）</li>
+<li>修改过的前序遍历算法（MPTT）</li>
+</ul>
+<p>要存储的树状结构数据图如下</p>
+<p>表名：Food</p>
+<p><img src="../../images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907161948118-1433800629.png" alt="img"></p>
+<h4 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a><strong>邻接表</strong></h4><p><img src="../../images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907162553553-1389987265.png" alt="img"></p>
+<p>邻接表依赖于pid字段连接上下级。id为自增主键，pid为上一节点的id，例如：Apple的上一节点是Red，所以 Apple pid = Red id</p>
+<h5 id="打印树结构"><a href="#打印树结构" class="headerlink" title="打印树结构"></a>打印树结构</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"> 1 class Tree</span><br><span class="line"> 2 &#123;</span><br><span class="line"> 3     private $treeM; // pdo实例</span><br><span class="line"> 4     private $tname; // 表名称</span><br><span class="line"> 5     private $stmt; // 结果集</span><br><span class="line"> 6     private $res; // 结果</span><br><span class="line"> 7     public function __construct(TreeM $treeM, $tname)</span><br><span class="line"> 8     &#123;</span><br><span class="line"> 9         $this-&gt;treeM = $treeM-&gt;getTreeM();</span><br><span class="line">10         $this-&gt;tname = $tname;</span><br><span class="line">11     &#125;</span><br><span class="line">12     /**</span><br><span class="line">13      * 打印树结构</span><br><span class="line">14      * @param &#123;Int&#125; $root_id 父节点id,为0则显示整个树结构</span><br><span class="line">15      * @param &#123;Int&#125; $level 当前节点所处的层级,用于缩进显示节点</span><br><span class="line">16      */</span><br><span class="line">17     public function show_tree($root_id = 0, $level)</span><br><span class="line">18     &#123;</span><br><span class="line">19         // 1. 获取父节点</span><br><span class="line">20         $this-&gt;stmt = $this-&gt;treeM-&gt;query(&quot;select id, title from &#123;$this-&gt;tname&#125; where pid=&#123;$root_id&#125;&quot;);</span><br><span class="line">21         $this-&gt;res = $this-&gt;stmt-&gt;fetchAll(2);</span><br><span class="line">22         foreach ($this-&gt;res as $row) &#123;</span><br><span class="line">23             // 2. 缩进显示</span><br><span class="line">24             echo &#x27;&lt;div style=&quot;margin-left:&#x27; . ($level * 32) . &#x27;px&quot;&gt;&#x27; . $row[&#x27;title&#x27;] . &#x27;&lt;/div&gt;&#x27;;</span><br><span class="line">25             // 3. 递归调用当前函数，显示再下一级的子节点</span><br><span class="line">26             $this-&gt;show_tree($row[&#x27;id&#x27;], $level + 1);</span><br><span class="line">27         &#125;</span><br><span class="line">28     &#125;</span><br><span class="line">29 &#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果图</p>
+<p><img src="../../images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907165734324-222101891.png" alt="img"></p>
+<h5 id="获取节点路径"><a href="#获取节点路径" class="headerlink" title="获取节点路径"></a>获取节点路径</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> 1     /**</span><br><span class="line"> 2      * 获取节点路径</span><br><span class="line"> 3      * @param &#123;Int&#125; 需要获取路径的当前节点的id</span><br><span class="line"> 4      */</span><br><span class="line"> 5     public function get_path($id)</span><br><span class="line"> 6     &#123;</span><br><span class="line"> 7         // 1. 获取当前节点 pid 和 title</span><br><span class="line"> 8         $this-&gt;stmt = $this-&gt;treeM-&gt;query(&quot;select title, pid from &#123;$this-&gt;tname&#125; where id=&#123;$id&#125;&quot;);</span><br><span class="line"> 9         $this-&gt;res = $this-&gt;stmt-&gt;fetch(2);</span><br><span class="line">10         // 此数组保存路径</span><br><span class="line">11         $path = [];</span><br><span class="line">12         $path[] = $this-&gt;res[&#x27;title&#x27;];</span><br><span class="line">13         // 如果父节点非 0，即非根节点，则进行递归调用获取父节点的路径</span><br><span class="line">14         if ($this-&gt;res[&#x27;pid&#x27;]) &#123;</span><br><span class="line">15             // 递归调用，获取父节点的路径，并且合并到当前路径数组的其它元素前边</span><br><span class="line">16             $path = array_merge($this-&gt;get_path($this-&gt;res[&#x27;pid&#x27;]), $path);</span><br><span class="line">17         &#125;</span><br><span class="line">18         return $path;</span><br><span class="line">19     &#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果图</p>
+<p><img src="../../images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907171305742-690483127.png" alt="img"></p>
+<h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><p>简单易懂，写入效率较高</p>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>查询起来效率低下。我们对于每个结果，期望只需要一次查询；可是当使用邻接表模型时嵌套的递归使用了多次查询，当树很大的时候，这种慢就会表现得尤为明显。</p>
+<h4 id="修改过的前序遍历算法"><a href="#修改过的前序遍历算法" class="headerlink" title="修改过的前序遍历算法"></a>修改过的前序遍历算法</h4><h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>把“树”横着放，如图所示，根节点 ‘Food’ 左侧标记 ‘1’，然后 ‘Fruit’ 左侧标记2，接着按前序遍历的顺序遍历完树，依次在每个节点的左右侧标记数字</p>
+<p><img src="../../images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907173718398-142753577.png" alt="img"></p>
+<p> 根据上图，改变数据表，增加 lft 和 rgt 两个字段用于存储左右数字（left和right是MySQL保留字，所以用简写）。</p>
+<p><img src="../../images/%E5%AD%98%E5%82%A8%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84/2020519-20200907173916394-1026923981.png" alt="img"></p>
+<h5 id="打印树结构-1"><a href="#打印树结构-1" class="headerlink" title="打印树结构"></a>打印树结构</h5><p>现在想要查看树结构只需一条SQL语句即可。比如，想要打印 ‘Fruit’ 的子树，可以查询左数大于2并且小于11的节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 select * from food where lft between 2 and 11;</span><br></pre></td></tr></table></figure>
+
+<p>什么时候显示缩进？缩进多少单位？解决这个问题，需要使用堆栈，即后进先出（LIFO），每到一个节点，将其右边的数字压入堆栈中。我们知道，所有节点右边的值都比其父节点右边的值小，那么将当前节点右边的值和堆栈最上边的右边值进行比较，如果当前节点比堆栈最上边的值小，表示当前堆栈里边剩下的都是父节点了，这时可以显示缩进，堆栈的元素数量即是缩进深度。PHP 代码实现如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"> 1     /**</span><br><span class="line"> 2      * 打印树结构</span><br><span class="line"> 3      * @param &#123;Int&#125; $root_id 父节点id,为0则显示整个树结构</span><br><span class="line"> 4      */</span><br><span class="line"> 5     public function show_tree($root_id = 1)</span><br><span class="line"> 6     &#123;</span><br><span class="line"> 7         // 1. 查询根节点的 lft 和 rgt</span><br><span class="line"> 8         $this-&gt;stmt = $this-&gt;treeM-&gt;query(&quot;select lft, rgt from &#123;$this-&gt;tname&#125; where id = &#123;$root_id&#125;&quot;);</span><br><span class="line"> 9         $this-&gt;res = $this-&gt;stmt-&gt;fetch(2);</span><br><span class="line">10 </span><br><span class="line">11         // 堆栈, 存储节点右边的值, 用于显示缩进</span><br><span class="line">12         $stack = [];</span><br><span class="line">13         // 2. 获取 $root_id 节点的所有子孙节点</span><br><span class="line">14         $this-&gt;stmt = $this-&gt;treeM-&gt;query(&quot;select title, lft, rgt from &#123;$this-&gt;tname&#125; where lft between &#123;$this-&gt;res[&#x27;lft&#x27;]&#125; and &#123;$this-&gt;res[&#x27;rgt&#x27;]&#125; order by lft asc&quot;);</span><br><span class="line">15         $this-&gt;res = $this-&gt;stmt-&gt;fetchAll(2);</span><br><span class="line">16 </span><br><span class="line">17         // 3. 显示节点</span><br><span class="line">18         foreach ($this-&gt;res as $row) &#123;</span><br><span class="line">19             if (count($stack) &gt; 0) &#123; // 仅在堆栈非空的时候检测</span><br><span class="line">20                 // 如果当前节点右边的值比堆栈最上边的值大，则移除堆栈最上边的值，因为这个值对应的节点不是当前节点的父节点</span><br><span class="line">21                 while ($row[&#x27;rgt&#x27;] &gt; $stack[count($stack) - 1]) &#123;</span><br><span class="line">22                     array_pop($stack);</span><br><span class="line">23                 &#125; //while 循环结束之后，堆栈里边只剩下当前节点的父节点了</span><br><span class="line">24             &#125;</span><br><span class="line">25             echo &#x27;&lt;div style=&quot;margin-left:&#x27; . (count($stack) * 32) . &#x27;px&quot;&gt;&#x27; . $row[&#x27;title&#x27;] . &#x27;&lt;/div&gt;&#x27;;</span><br><span class="line">26             // 将当前的节点压入堆栈里边, 为循环后边的节点缩进做准备</span><br><span class="line">27             array_push($stack, $row[&#x27;rgt&#x27;]);</span><br><span class="line">28         &#125;</span><br><span class="line">29     &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="求节点的路径"><a href="#求节点的路径" class="headerlink" title="求节点的路径"></a>求节点的路径</h5><p>查看某节点的路径，只需求出左数值小于其左数值,并且右数值大于其右数值的所有节点。比如，要查询Apple的路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 select title from food where lft &lt; 8 and rgt &gt;9 order by lft asc;</span><br></pre></td></tr></table></figure>
+
+<p>PHP方法实现如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> 1     /**</span><br><span class="line"> 2      * 打印路径根节点到某节点的路径</span><br><span class="line"> 3      * @param &#123;Int&#125; $node_id 需要获取路径的节点id</span><br><span class="line"> 4      */</span><br><span class="line"> 5     public function get_path($node_id)</span><br><span class="line"> 6     &#123;</span><br><span class="line"> 7         // 1. 获取当前节点的 lft 和 rgt</span><br><span class="line"> 8         $this-&gt;stmt = $this-&gt;treeM-&gt;query(&quot;select lft, rgt from &#123;$this-&gt;tname&#125; where id = &#123;$node_id&#125;&quot;);</span><br><span class="line"> 9         $this-&gt;res = $this-&gt;stmt-&gt;fetch(2);</span><br><span class="line">10         // 2. 获取路径中的所有节点</span><br><span class="line">11         $this-&gt;stmt = $this-&gt;treeM-&gt;query(&quot;select title from &#123;$this-&gt;tname&#125; where lft &lt;= &#123;$this-&gt;res[&#x27;lft&#x27;]&#125; and rgt &gt;= &#123;$this-&gt;res[&#x27;rgt&#x27;]&#125; order by lft asc&quot;);</span><br><span class="line">12         $this-&gt;res = $this-&gt;stmt-&gt;fetchAll(2);</span><br><span class="line">13         // 3. 返回结果数组</span><br><span class="line">14         $path = [];</span><br><span class="line">15         foreach ($this-&gt;res as $row) &#123;</span><br><span class="line">16             $path[] = $row[&#x27;title&#x27;];</span><br><span class="line">17         &#125;</span><br><span class="line">18         return $path;</span><br><span class="line">19     &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="插入节点"><a href="#插入节点" class="headerlink" title="插入节点"></a>插入节点</h5><p>插入新节点之前，首先要给这个节点腾出空位来。比如我们现在要在 ‘Apple’ 的右边新增 ‘Orange’节点，则腾位的 SQL 语句如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 update food set rgt=rgt+2 where rgt&gt;9;</span><br><span class="line">2 update food set lft=lft+2 where lft&gt;9;</span><br></pre></td></tr></table></figure>
+
+<p>之后，插入新节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 insert into food value(null,&#x27;Orange&#x27;,10,11);</span><br></pre></td></tr></table></figure>
+
+<p>代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> 1     /**</span><br><span class="line"> 2      * 插入一个新节点</span><br><span class="line"> 3      * @param &#123;String&#125; $title 节点名称</span><br><span class="line"> 4      * @param &#123;Int&#125; $pid 父节点id</span><br><span class="line"> 5      */</span><br><span class="line"> 6     public function add($title, $pid)</span><br><span class="line"> 7     &#123;</span><br><span class="line"> 8         // 1. 查询父节点的 rgt 值</span><br><span class="line"> 9         $this-&gt;stmt = $this-&gt;treeM-&gt;query(&quot;select rgt from &#123;$this-&gt;tname&#125; where id = &#123;$pid&#125;&quot;);</span><br><span class="line">10         $this-&gt;res = $this-&gt;stmt-&gt;fetch(2);</span><br><span class="line">11         // 2. 通过图看出规律, 父节点的子节点中 rgt值最大的为 父节点的rgt值 - 1, 所以</span><br><span class="line">12         $maxRgt = $this-&gt;res[&#x27;rgt&#x27;] - 1;</span><br><span class="line">13         // 3. 为新节点腾出空间</span><br><span class="line">14         $this-&gt;stmt = $this-&gt;treeM-&gt;exec(&quot;update &#123;$this-&gt;tname&#125; set rgt=rgt+2 where rgt&gt;&#123;$maxRgt&#125;&quot;);</span><br><span class="line">15         $this-&gt;stmt = $this-&gt;treeM-&gt;exec(&quot;update &#123;$this-&gt;tname&#125; set lft=lft+2 where lft&gt;&#123;$maxRgt&#125;&quot;);</span><br><span class="line">16         // 4. 添加新节点</span><br><span class="line">17         $lft = $maxRgt + 1;</span><br><span class="line">18         $rgt = $lft + 1;</span><br><span class="line">19         $this-&gt;stmt = $this-&gt;treeM-&gt;exec(&quot;insert into &#123;$this-&gt;tname&#125; value(null,&#x27;&#123;$title&#125;&#x27;,&#123;$lft&#125;,&#123;$rgt&#125;)&quot;);</span><br><span class="line">20         if ($this-&gt;stmt) &#123;</span><br><span class="line">21             return $this-&gt;treeM-&gt;lastInsertId();</span><br><span class="line">22         &#125;</span><br><span class="line">23     &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h5><p>树的构造，路径获取方面性能比邻接表好很多，这个算法牺牲了一些写的性能来换取读的性能，在WEB应用中，读数据库的比例远大于写数据库的比例，所以MPTT更受欢迎些，更加实用</p>
+<h5 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h5><p>算法比较抽象，不易理解，增加节点时虽然只用了几条SQL语句，但可能会需要更新很多记录，从而造成阻塞</p>
+
+      
+    </div>
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/php/5e609c3c/" rel="next" title="PHP $a && $b = $c 和 $a || $b = $c语法">
+                <i class="fa fa-chevron-left"></i> PHP $a && $b = $c 和 $a || $b = $c语法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/php/e6a67bb/" rel="prev" title="理解内聚与耦合">
+                理解内聚与耦合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%82%BB%E6%8E%A5%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">邻接表</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%89%93%E5%8D%B0%E6%A0%91%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">打印树结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%8A%82%E7%82%B9%E8%B7%AF%E5%BE%84"><span class="nav-number">1.2.</span> <span class="nav-text">获取节点路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">1.3.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.4.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%BF%87%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86%E7%AE%97%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">修改过的前序遍历算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%89%93%E5%8D%B0%E6%A0%91%E7%BB%93%E6%9E%84-1"><span class="nav-number">2.2.</span> <span class="nav-text">打印树结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B1%82%E8%8A%82%E7%82%B9%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="nav-number">2.3.</span> <span class="nav-text">求节点的路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E8%8A%82%E7%82%B9"><span class="nav-number">2.4.</span> <span class="nav-text">插入节点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-1"><span class="nav-number">2.5.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-1"><span class="nav-number">2.6.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">blackdream</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">33.7k</span>
+  
+</div>
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('copy').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('/n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('success')
+          else $(this).text('fail')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('copy')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
