@@ -1637,7 +1637,8 @@
       
         
           
-            <h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a><strong>基本概念</strong></h3><p>undo log 有两个作用：提供回滚和多个行版本控制(MVCC)。</p>
+            <p>转自：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1497335">https://cloud.tencent.com/developer/article/1497335</a></p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a><strong>基本概念</strong></h3><p>undo log 有两个作用：提供回滚和多个行版本控制(MVCC)。</p>
 <p>在操作任何数据之前，首先将数据逻辑备份到undo log，然后进行数据修改。如果因为某些原因导致事务失败或回滚了，可以借助该undo log进行回滚。</p>
 <p>undo log和redo log记录物理日志不一样，它是逻辑日志。<strong>可以认为当delete一条记录时，undo log中会记录一条对应的insert记录，反之亦然，当update一条记录时，它记录一条对应相反的update记录。</strong></p>
 <p>当执行 rollback 时，就可以从undo log中的逻辑记录读取到相应的内容并进行回滚。有时候应用到行版本控制的时候，也是通过undo log来实现的：当读取的某一行被其他事务锁定时，它可以从undo log中分析出该行记录以前的数据是什么，从而提供该行版本信息，让用户实现非锁定一致性读取。</p>
