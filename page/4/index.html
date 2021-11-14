@@ -285,6 +285,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/javascript/142b5746/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="黑梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/javascript/142b5746/" itemprop="url">vue/uni-app 父组件异步获取动态数据传递给子组件 获取不到值</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-30T10:25:00+08:00">
+                2020-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>问题：</strong></p>
+<p>vue 父组件异步请求获取数据，在请求数据没有返回数据时，子组件就已经加载了，并且它绑定的值也是空的</p>
+<p><strong>解决方法（两种）：</strong></p>
+<h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><p>让子组件条件渲染，数据渲染完成后才渲染子组件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 父组件中 条件渲染子组件prizeRoll --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;view&gt;</span><br><span class="line">        &lt;block v-if=&quot;flag&quot;&gt;</span><br><span class="line">            &lt;prizeRoll :lists=&quot;rankList&quot; :listNum=&quot;5&quot;&gt;&lt;/prizeRoll&gt;</span><br><span class="line">        &lt;/block&gt;</span><br><span class="line">    &lt;view&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import prizeRoll from &#x27;../../components/prize-info/prize-info.vue&#x27;</span><br><span class="line">export default &#123;</span><br><span class="line">    components: &#123; prizeRoll &#125;,</span><br><span class="line">    data() &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            rankList: [],</span><br><span class="line">           flag: flase,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        // 异步请求数据</span><br><span class="line">        ranking() &#123;</span><br><span class="line">            this.$api(&#x27;gonggao.ranking&#x27;).then((res) =&gt; &#123;</span><br><span class="line">                this.rankList = res.data</span><br><span class="line">                // 数据渲染完成后，将flag值改为true</span><br><span class="line">                this.flag = true</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    onLoad() &#123;</span><br><span class="line">        this.ranking()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><p>大概逻辑：使用vuex全局状态管理,其实简单，利用vuex的辅助函数（mapState，mapMutations）mapState是将state里面的数据映射到计算中（computed），mapMutations也是类似，把vuex中mutations的方法映射到组件里面，就可以在组件里面直接使用方法了,在vuex中使用异步（actions）去掉用接口，然后在接口成功的函数里面取触发同步（mutations）里面的方法,把得到数据传给mutations里面的方法里并且给state里面的属性赋值，然后就可以在子组件中使用computed计算中去获取数据并且渲染到页面上</p>
+<p><strong>vuex / index.js</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"> &lt;script&gt;</span><br><span class="line"> import Vue from &#x27;vue&#x27;</span><br><span class="line"> import Vuex from &#x27;vuex&#x27;</span><br><span class="line"> import axios from &#x27;axios&#x27;</span><br><span class="line"> Vue.use(Vuex)</span><br><span class="line"> export default new Vuex.Store(&#123;</span><br><span class="line">     //定义初始数据</span><br><span class="line">     state: &#123;</span><br><span class="line">         title: &#x27;&#x27;,</span><br><span class="line">         list: [],</span><br><span class="line">         isShow: false</span><br><span class="line">     &#125;,</span><br><span class="line">     //同步的方法</span><br><span class="line">     mutations: &#123;</span><br><span class="line">         //向state 里面设置数据</span><br><span class="line">         changeListMutation(state, list) &#123;</span><br><span class="line">             state.list = list</span><br><span class="line">         &#125;,</span><br><span class="line">         //在list.vue里面点击下拉选项的时候触发 给state.title赋值</span><br><span class="line">         changeTitleMutation(state, title) &#123;</span><br><span class="line">             state.title = title</span><br><span class="line">         &#125;,</span><br><span class="line">         //selectinput.vue里面点击input的时候触发 给state.isShow赋值</span><br><span class="line">         toggleShow(state, isShow) &#123;</span><br><span class="line">             state.isShow = isShow</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;,</span><br><span class="line">     //异步的方法</span><br><span class="line">     actions: &#123;</span><br><span class="line">         //在list.vue里面created生命周期里面触发</span><br><span class="line">         getListAction(&#123; commit &#125;) &#123;</span><br><span class="line">             axios.get(&#x27;/mock/5afd9dc0c088691e06a6ab45/example/dataList&#x27;)</span><br><span class="line">                 .then((res) =&gt; &#123;</span><br><span class="line">                     commit(&#x27;changeListMutation&#x27;, res.data) //调用mutations下面的changeListMutation方法并且传值过去</span><br><span class="line">                 &#125;)</span><br><span class="line">                 .catch((error) =&gt; &#123;</span><br><span class="line">                     console.log(error)</span><br><span class="line">                 &#125;)</span><br><span class="line"> </span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;)</span><br><span class="line">// 触发异步里面的方法是用 this.$store.dispatch(&#x27;这里是方法名&#x27;)</span><br><span class="line">// 触发同步里面的方法是用 this.$store.commit(&#x27;这里是方法名&#x27;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>父组件 select.vue</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;select&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;wrap&quot;&gt;</span><br><span class="line">        &lt;selectInput&gt;&lt;/selectInput&gt;</span><br><span class="line">        &lt;list&gt;&lt;/list&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  // 引入子组件 </span><br><span class="line">  import selectInput from &#x27;@/components/selectInput&#x27;  </span><br><span class="line">  import list from &#x27;@/components/list&#x27;</span><br><span class="line">  export default &#123;</span><br><span class="line">    components:&#123;   //加载子组件</span><br><span class="line">      selectInput,</span><br><span class="line">      list</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">  .select&#123;</span><br><span class="line">    background:#4a56fe;</span><br><span class="line">    width: 400px;</span><br><span class="line">    margin: 100px auto 0;</span><br><span class="line">    padding: 40px;</span><br><span class="line">    border-radius: 10px;</span><br><span class="line">  &#125;</span><br><span class="line">  .wrap&#123;</span><br><span class="line">    background: #e3e5fe;</span><br><span class="line">    border-radius: 10px;</span><br><span class="line">    padding: 40px;</span><br><span class="line">  &#125;</span><br><span class="line">  ul&#123;</span><br><span class="line">    list-style: none;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>子组件 list.vue</p>
+<p>该组件就是展示下拉选项，并且调用数据渲染</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;list&quot;&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">      &lt;li v-for=&quot;(item,index) in list&quot; :key=&quot;index&quot; v-show=&quot;initShow&quot; @click=&quot;changeTitle(item.title)&quot;&gt;&#123;&#123;item.title&#125;&#125;&lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    import &#123;mapState,mapMutations&#125; from &#x27;vuex&#x27;  // 将vuex中的state数据和mutations中的方法映射到组件中</span><br><span class="line">    export default &#123;</span><br><span class="line">        //vue 生命周期（created）在实例创建之后，在数据初始化之前被调用</span><br><span class="line">        created()&#123;  </span><br><span class="line">            this.$store.dispatch(&#x27;getListAction&#x27;)  //调用vuex 中的 getListAction异步方法</span><br><span class="line">        &#125;,</span><br><span class="line">        //计算state数据</span><br><span class="line">        computed:&#123;</span><br><span class="line">            ...mapState(&#123;</span><br><span class="line">              list:&#x27;list&#x27;,</span><br><span class="line">              initShow:&#x27;isShow&#x27;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">        methods:&#123;</span><br><span class="line">            changeTitle(title)&#123;</span><br><span class="line">              this.$store.commit(&#x27;changeTitleMutation&#x27;,title)</span><br><span class="line">              this.$store.commit(&#x27;toggleShow&#x27;,!this.initShow)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">// 触发异步里面的方法是用 this.$store.dispatch(&#x27;这里是方法名&#x27;)</span><br><span class="line">// 触发同步里面的方法是用 this.$store.commit(&#x27;这里是方法名&#x27;)</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">  .list&#123;</span><br><span class="line">    padding: 10px 0;</span><br><span class="line">    text-align: center;</span><br><span class="line">  &#125;</span><br><span class="line">  li&#123;</span><br><span class="line">    line-height: 30px;</span><br><span class="line">    height: 30px;</span><br><span class="line">    border-radius: 15px;</span><br><span class="line">    cursor: pointer;</span><br><span class="line">    color:#535353;</span><br><span class="line">  &#125;</span><br><span class="line">  li:hover&#123;</span><br><span class="line">    background: #ff705b;</span><br><span class="line">    color: #fff;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>子组件 selectinput.vue</p>
+<p>该组件展示选中的数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;inputBox&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; readonly :value=&quot;getTitle&quot; @click=&quot;toggleShow&quot; placeholder=&quot;你喜欢什么&quot;&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  computed:&#123;</span><br><span class="line">    // 获取vuex中的state数据并赋值绑定到 value上面  computed 里面的方法名其实就是相当于 data里面的数据，可以用this.getTitle 去访问</span><br><span class="line">    getTitle()&#123; </span><br><span class="line">      return this.$store.state.title</span><br><span class="line">    &#125;,</span><br><span class="line">    // 初始化控制下拉选项显示隐藏的状态，如果isShow是false 则不限是下拉菜单，默认是false</span><br><span class="line">    initShow()&#123;</span><br><span class="line">        return this.$store.state.isShow</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods:&#123;</span><br><span class="line">    //点击input的时候调用该方法，这个方法去触发mutations下面的toggleShow，去改变isShow的状态，默认是isShow等于false, 然后在点击的时候去改变isShow 等于true ,  !this.initShow就是true，如果是true的话，下拉选项才能出来,并将改变过后的值传给toggleShow方法，去给vuex/store.js 里面的state.isShow赋值。</span><br><span class="line">    toggleShow()&#123;</span><br><span class="line">      this.$store.commit(&#x27;toggleShow&#x27;,!this.initShow)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">input&#123;</span><br><span class="line">  outline: none;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 40px;</span><br><span class="line">  line-height: 40px;</span><br><span class="line">  border-radius: 10px;</span><br><span class="line">  border: 1px solid #d3d3d3;</span><br><span class="line">  text-indent: 20px;</span><br><span class="line">  color: #535353;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>转载自：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4450b63a27fe">https://www.jianshu.com/p/4450b63a27fe</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/javascript/5221cec5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2151,192 +2344,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/javascript/ed35deee/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="黑梦">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/javascript/ed35deee/" itemprop="url">JS 向DOM中添加元素内容 - insertAdjacentHTML</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-16T01:37:00+08:00">
-                2020-08-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  432
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一直是向dom中追加元素的操作就是,createElement 、appendChild等, 知道发现了更加灵活、方便的 insertAdjacentHTML</p>
-<h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><p>insertAdjacentHTML() 可以将文本解析成 Element 元素，并将结果节点追加到DOM树指定位置，它不会重新解析它正在使用的元素，因此它不会破坏元素内的现有元素。这避免了额外的序列化步骤，使其比直接使用innerHTML操作更快</p>
-<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><p>element.insertAdjacentHTML(position, text);</p>
-<p>position是指添加到哪个位置 ，并且必须是以下字符串之一：</p>
-<ul>
-<li>beforebegin: 元素自身的前面</li>
-<li>afterbegin: 插入元素内部的第一个子节点之前</li>
-<li>beforeend: 插入元素内部的最后一个子节点之后</li>
-<li>afterend: 元素自身的后面</li>
-</ul>
-<p>text是要被解析为HTML或XML元素，并插入到DOM树中的字符串</p>
-<h4 id="示例及效果图"><a href="#示例及效果图" class="headerlink" title="示例及效果图"></a>示例及效果图</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;box&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span>最开始的一句话<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> str1 = <span class="string">&#x27;&lt;div&gt;beforebegin - 插入到元素自身的前面&lt;/div&gt;&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> str2 = <span class="string">&#x27;&lt;div&gt;afterbegin - 插入元素内部的第一个子节点之前&lt;/div&gt;&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> str3 = <span class="string">&#x27;&lt;div&gt;beforeend - 插入元素内部的最后一个子节点之后&lt;/div&gt;&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> str4 = <span class="string">&#x27;&lt;div&gt;afterend - 元素自身的后面&lt;/div&gt;&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> box = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#box&#x27;</span>);</span></span><br><span class="line"><span class="javascript">    box.insertAdjacentHTML(<span class="string">&#x27;beforebegin&#x27;</span>, str1);</span></span><br><span class="line"><span class="javascript">    box.insertAdjacentHTML(<span class="string">&#x27;afterbegin&#x27;</span>, str2);</span></span><br><span class="line"><span class="javascript">    box.insertAdjacentHTML(<span class="string">&#x27;beforeend&#x27;</span>, str3);</span></span><br><span class="line"><span class="javascript">    box.insertAdjacentHTML(<span class="string">&#x27;afterend&#x27;</span>, str4);</span></span><br><span class="line"><span class="javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>效果图：</strong></p>
-<p><img src="../../images/DOM%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0%E5%86%85%E5%AE%B9_insertAdjacentHTML/2020519-20200816013448847-1056945316.png" alt="img"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2387,7 +2394,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2460,7 +2467,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">34k</span>
+    <span title="Site words total count">36.1k</span>
   
 </div>
 
