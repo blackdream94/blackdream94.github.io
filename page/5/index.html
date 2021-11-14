@@ -285,192 +285,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/javascript/ed35deee/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="黑梦">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/javascript/ed35deee/" itemprop="url">JS 向DOM中添加元素内容 - insertAdjacentHTML</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-16T01:37:00+08:00">
-                2020-08-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  432
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一直是向dom中追加元素的操作就是,createElement 、appendChild等, 知道发现了更加灵活、方便的 insertAdjacentHTML</p>
-<h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><p>insertAdjacentHTML() 可以将文本解析成 Element 元素，并将结果节点追加到DOM树指定位置，它不会重新解析它正在使用的元素，因此它不会破坏元素内的现有元素。这避免了额外的序列化步骤，使其比直接使用innerHTML操作更快</p>
-<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><p>element.insertAdjacentHTML(position, text);</p>
-<p>position是指添加到哪个位置 ，并且必须是以下字符串之一：</p>
-<ul>
-<li>beforebegin: 元素自身的前面</li>
-<li>afterbegin: 插入元素内部的第一个子节点之前</li>
-<li>beforeend: 插入元素内部的最后一个子节点之后</li>
-<li>afterend: 元素自身的后面</li>
-</ul>
-<p>text是要被解析为HTML或XML元素，并插入到DOM树中的字符串</p>
-<h4 id="示例及效果图"><a href="#示例及效果图" class="headerlink" title="示例及效果图"></a>示例及效果图</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;box&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span>最开始的一句话<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> str1 = <span class="string">&#x27;&lt;div&gt;beforebegin - 插入到元素自身的前面&lt;/div&gt;&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> str2 = <span class="string">&#x27;&lt;div&gt;afterbegin - 插入元素内部的第一个子节点之前&lt;/div&gt;&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> str3 = <span class="string">&#x27;&lt;div&gt;beforeend - 插入元素内部的最后一个子节点之后&lt;/div&gt;&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> str4 = <span class="string">&#x27;&lt;div&gt;afterend - 元素自身的后面&lt;/div&gt;&#x27;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> box = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#box&#x27;</span>);</span></span><br><span class="line"><span class="javascript">    box.insertAdjacentHTML(<span class="string">&#x27;beforebegin&#x27;</span>, str1);</span></span><br><span class="line"><span class="javascript">    box.insertAdjacentHTML(<span class="string">&#x27;afterbegin&#x27;</span>, str2);</span></span><br><span class="line"><span class="javascript">    box.insertAdjacentHTML(<span class="string">&#x27;beforeend&#x27;</span>, str3);</span></span><br><span class="line"><span class="javascript">    box.insertAdjacentHTML(<span class="string">&#x27;afterend&#x27;</span>, str4);</span></span><br><span class="line"><span class="javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>效果图：</strong></p>
-<p><img src="../../images/DOM%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0%E5%86%85%E5%AE%B9_insertAdjacentHTML/2020519-20200816013448847-1056945316.png" alt="img"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/mysql/d9d3bf06/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -870,7 +684,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -943,7 +757,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">36.1k</span>
+    <span title="Site words total count">34k</span>
   
 </div>
 
