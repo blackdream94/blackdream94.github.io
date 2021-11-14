@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="首先看这种写法 123456789101112 1 &lt;?php 2 abstract class A 3 &amp;#123; 4     public static function create(): A 5     &amp;#123; 6         return new self(); 7     &amp;#125; 8 &amp;#125; 9 class B extends A10 &amp;#123;11 &amp;">
+<meta name="description" content="首先看这种写法 123456789101112&lt;?phpabstract class A&amp;#123;    public static function create(): A    &amp;#123;        return new self();    &amp;#125;&amp;#125;class B extends A&amp;#123;&amp;#125;B::create();  会成功实例化B吗？不会的，并">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHP static 延迟静态绑定">
 <meta property="og:url" content="http://example.com/php/d7fe6b68/index.html">
 <meta property="og:site_name" content="黑梦">
-<meta property="og:description" content="首先看这种写法 123456789101112 1 &lt;?php 2 abstract class A 3 &amp;#123; 4     public static function create(): A 5     &amp;#123; 6         return new self(); 7     &amp;#125; 8 &amp;#125; 9 class B extends A10 &amp;#123;11 &amp;">
+<meta property="og:description" content="首先看这种写法 123456789101112&lt;?phpabstract class A&amp;#123;    public static function create(): A    &amp;#123;        return new self();    &amp;#125;&amp;#125;class B extends A&amp;#123;&amp;#125;B::create();  会成功实例化B吗？不会的，并">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-11-17T15:14:00.000Z">
-<meta property="article:modified_time" content="2021-10-17T16:29:19.779Z">
+<meta property="article:modified_time" content="2021-10-22T18:47:00.786Z">
 <meta property="article:author" content="blackdream">
 <meta name="twitter:card" content="summary">
 
@@ -374,7 +374,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  724
+                  669
                 </span>
               
 
@@ -390,7 +390,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  2
                 </span>
               
             </div>
@@ -412,7 +412,7 @@
 
       
         <p>首先看这种写法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> 1 &lt;?php</span><br><span class="line"> 2 abstract class A</span><br><span class="line"> 3 &#123;</span><br><span class="line"> 4     public static function create(): A</span><br><span class="line"> 5     &#123;</span><br><span class="line"> 6         return new self();</span><br><span class="line"> 7     &#125;</span><br><span class="line"> 8 &#125;</span><br><span class="line"> 9 class B extends A</span><br><span class="line">10 &#123;</span><br><span class="line">11 &#125;</span><br><span class="line">12 B::create();</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>): <span class="title">A</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">self</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">B::create();</span><br></pre></td></tr></table></figure>
 
 <p>会成功实例化B吗？不会的，并且还会报错</p>
 <hr>
@@ -421,12 +421,12 @@
 <p>实际上，self对该类的作用与$this对对象的作用不完全相同。self不是指调用上下文，而是指解析上下文。因此，如果运行上面的例子，会报错，无法实例化抽象类</p>
 <p>也就是说，self指向了定义了create()方法的A抽象类，而不是发送调用的B。在PHP5.3之前，这都是一种严格的限制，也出现了许多笨拙的解决方法。PHP5.3中引入了一种叫做延迟静态绑定的概念，最明显的特征就是关键字static。static与self类似，区别在于前者引用的是被调用的类。</p>
 <p>这样写就能在静态上下文中利用继承关系了：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> 1 &lt;?php</span><br><span class="line"> 2 abstract class A</span><br><span class="line"> 3 &#123;</span><br><span class="line"> 4     public static function create(): A</span><br><span class="line"> 5     &#123;</span><br><span class="line"> 6         return new static();</span><br><span class="line"> 7     &#125;</span><br><span class="line"> 8 &#125;</span><br><span class="line"> 9 class B extends A</span><br><span class="line">10 &#123;</span><br><span class="line">11 &#125;</span><br><span class="line">12 B::create();</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>): <span class="title">A</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">static</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">B::create();</span><br></pre></td></tr></table></figure>
 
 <p>2.</p>
 <p>static关键字的用处可不止实例化而已。和self、parent一样，static还可以被用作静态方法调用的标识符，在非静态上下文中也一样。看代码：</p>
 <p>A类中有分类group的概念，默认情况下是”default“类，我也可以在类的继承层次的分支中改变这个类别</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"> 1 abstract class A</span><br><span class="line"> 2 &#123;</span><br><span class="line"> 3     private $group;</span><br><span class="line"> 4     public function __construct()</span><br><span class="line"> 5     &#123;</span><br><span class="line"> 6         $this-&gt;group = static::getGroup();</span><br><span class="line"> 7     &#125;</span><br><span class="line"> 8     public static function create(): A</span><br><span class="line"> 9     &#123;</span><br><span class="line">10         return new static();</span><br><span class="line">11     &#125;</span><br><span class="line">12     public static function getGroup()</span><br><span class="line">13     &#123;</span><br><span class="line">14         return &#x27;default&#x27;;</span><br><span class="line">15     &#125;</span><br><span class="line">16 &#125;</span><br><span class="line">17 </span><br><span class="line">18 class B extends A</span><br><span class="line">19 &#123;</span><br><span class="line">20 &#125;</span><br><span class="line">21 </span><br><span class="line">22 class C extends A</span><br><span class="line">23 &#123;</span><br><span class="line">24     public static function getGroup()</span><br><span class="line">25     &#123;</span><br><span class="line">26         return &#x27;document&#x27;;</span><br><span class="line">27     &#125;</span><br><span class="line">28 &#125;</span><br><span class="line">29 </span><br><span class="line">30 class D extends C</span><br><span class="line">31 &#123;</span><br><span class="line">32 &#125;</span><br><span class="line">33 var_dump(B::create(), C::create(), D::create());</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$group</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;group = <span class="built_in">static</span>::getGroup();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>): <span class="title">A</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">static</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getGroup</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;default&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">extends</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getGroup</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;document&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span> <span class="keyword">extends</span> <span class="title">C</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">var_dump(B::create(), C::create(), D::create());</span><br></pre></td></tr></table></figure>
 
 <p>我在A类中加入了一个构造方法，他会使用static关键字调用静态方法getGroup()。A类提供了“default”类别的实现。另外我还创建了一个新的类D，它继承自C。上面例子的输出结果为：</p>
 <hr>
@@ -483,8 +483,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/javascript/8f45c573/" rel="next" title="ElementUI el-select下拉选择框默认显示">
-                <i class="fa fa-chevron-left"></i> ElementUI el-select下拉选择框默认显示
+              <a href="/mysql/dacc1947/" rel="next" title="MySQL 底层架构原理">
+                <i class="fa fa-chevron-left"></i> MySQL 底层架构原理
               </a>
             
           </div>
@@ -563,7 +563,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -636,7 +636,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">33.7k</span>
+    <span title="Site words total count">34k</span>
   
 </div>
 
